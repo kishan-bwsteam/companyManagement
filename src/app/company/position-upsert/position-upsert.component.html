@@ -1,0 +1,66 @@
+<p-toast></p-toast>
+<form [formGroup]="positionForm" (ngSubmit)="onSubmit()" class="m-5" style="display: flex; flex-direction: column; width: 300px;">
+    <div class="form-group">
+        <label for="positionName">Position Name</label>
+        <input
+            id="positionName"
+            formControlName="positionName"
+            class="form-control"
+            placeholder="Enter Position Name"
+        />
+        <div *ngIf="f['positionName'].touched && f['positionName'].invalid" class="invalid-feedback">
+            <div *ngIf="f['positionName'].errors?.['required']">Position Name is required.</div>
+            <div *ngIf="f['positionName'].errors?.['maxLength']">Max length is 50 characters.</div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="positionLevel">Position Level</label>
+        <input
+            id="positionLevel"
+            type="number"
+            formControlName="positionLevel"
+            class="form-control"
+            placeholder="Enter Position Level"
+        />
+        <div *ngIf="f['positionLevel'].touched && f['positionLevel'].invalid" class="invalid-feedback">
+            <div *ngIf="f['positionLevel'].errors?.['required']">Position Level is required.</div>
+            <div *ngIf="f['positionLevel'].errors?.['min']">Min value is 1.</div>
+            <div *ngIf="f['positionLevel'].errors?.['max']">Max value is 10.</div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="abberivation">Abbreviation</label>
+        <input
+            id="abberivation"
+            formControlName="abberivation"
+            class="form-control"
+            placeholder="Enter Abbreviation"
+        />
+        <div *ngIf="f['abberivation'].touched && f['abberivation'].invalid" class="invalid-feedback">
+            <div *ngIf="f['abberivation'].errors?.['required']">Abbreviation is required.</div>
+            <div *ngIf="f['abberivation'].errors?.['maxLength']">Max length is 10 characters.</div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="departmentID">Department</label>
+        <p-dropdown
+            id="departmentID"
+            formControlName="departmentID"
+            [options]="departments"
+            optionValue="departmentId"
+            optionLabel="departmentName"
+            placeholder="Select Department"
+            class="form-control p-0"
+        ></p-dropdown>
+        <div *ngIf="f['departmentID'].touched && f['departmentID'].invalid" class="invalid-feedback">
+            <div *ngIf="f['departmentID'].errors?.['required']">Department is required.</div>
+        </div>
+    </div>
+
+    <button type="submit" [disabled]="positionForm.invalid" class="btn btn-primary mt-3">
+        {{ isEditMode ? 'Update Position' : 'Create Position' }}
+    </button>
+</form>

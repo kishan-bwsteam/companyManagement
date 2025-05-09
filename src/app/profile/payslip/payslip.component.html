@@ -1,0 +1,71 @@
+<div class="container">
+    <div style="display: flex;flex-direction: row; justify-content: space-between;">
+        <p-select [options]="months" [(ngModel)]="selectedMonth" optionLabel="name"
+            placeholder="Select a Month" class="w-full md:w-56" />
+        <p-select [options]="years" [(ngModel)]="selectedYear" placeholder="Select a Year"
+            class="w-full md:w-56" />
+    </div>
+    <div class="my-2 p-4"
+        style="display: flex; flex-direction: column; border: 1px solid rgb(214, 214, 214); border-radius: 5px;">
+        <div class="row mx-2 mb-4">
+            <h3>January 2025</h3>
+            <a class="ml-auto m-2">Download</a>
+        </div>
+        <div class="salary-table-div table">
+            <table class="salary-table">
+                <thead>
+                    <tr>
+                        <th>Earnings</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Basic</td>
+                        <td>56,3485</td>
+                    </tr>
+                    <tr>
+                        <td>House Rent Allowance</td>
+                        <td>2,3485</td>
+                    </tr>
+                    <tr>
+                        <td>Other</td>
+                        <td>6,3485</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>Totel</th>
+                        <th>64,574</th>
+                    </tr>
+                </tfoot>
+            </table>
+            <div class="vertical-seprator"></div>
+            <table class="salary-table">
+                <thead>
+                    <tr>
+                        <th>Deductions</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>EPF</td>
+                        <td>2,3485</td>
+                    </tr>
+                    <tr>
+                        <td>Insurance</td>
+                        <td>6,3485</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>Totel</th>
+                        <th>64,574</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+
+</div>

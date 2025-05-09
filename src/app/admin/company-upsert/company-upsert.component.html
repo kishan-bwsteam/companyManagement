@@ -1,0 +1,62 @@
+<p-toast></p-toast>
+<form [formGroup]="companyForm" (ngSubmit)="onSubmit()" class="container mt-4">
+    <div class="form-group">
+        <label>Company Name</label>
+        <input type="text" class="form-control" formControlName="companyName" />
+        <small *ngIf="f['companyName'].touched && f['companyName'].invalid" class="text-danger">Required</small>
+    </div>
+
+    <div class="form-group">
+        <label>Address Line 1</label>
+        <input type="text" class="form-control" formControlName="addressLine1" />
+        <small *ngIf="f['addressLine1'].touched && f['addressLine1'].invalid" class="text-danger">Required</small>
+    </div>
+
+    <div class="form-group">
+        <label>Address Line 2</label>
+        <input type="text" class="form-control" formControlName="addressLine2" />
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label>City</label>
+            <input type="text" class="form-control" formControlName="city" />
+            <small *ngIf="f['city'].touched && f['city'].invalid" class="text-danger">Required</small>
+        </div>
+        <div class="form-group col-md-6">
+            <label>State</label>
+            <p-select [options]="stateList" optionLabel="stateName" optionValue="stateId" formControlName="stateId"
+                placeholder="Select a State" class="form-control p-0" />
+            <!-- <small *ngIf="f['stateId'].touched && f['stateId'].invalid" class="text-danger">Required</small> -->
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label>Zip Code</label>
+            <input type="number" class="form-control" formControlName="zipCode" />
+            <small *ngIf="f['zipCode'].touched && f['zipCode'].invalid" class="text-danger">Enter valid zip</small>
+        </div>
+        <div class="form-group col-md-4">
+            <label>Country</label>
+            <p-select [options]="countryList" optionLabel="countryName" optionValue="countryId" formControlName="countryId"
+                placeholder="Select a Country" class="form-control p-0" />
+            <!-- <small *ngIf="f['country'].touched && f['country'].invalid" class="text-danger">Required</small> -->
+        </div>
+        <div class="form-group col-md-4">
+            <label>GSTIN</label>
+            <input type="text" class="form-control" formControlName="gstin" />
+            <small *ngIf="f['gstin'].touched && f['gstin'].invalid" class="text-danger">Required</small>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>CIN</label>
+        <input type="text" class="form-control" formControlName="cin" />
+        <small *ngIf="f['cin'].touched && f['cin'].invalid" class="text-danger">Required</small>
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-2" [disabled]="companyForm.invalid">
+        {{ isEditMode ? 'Update Company' : 'Create Company' }}
+    </button>
+</form>

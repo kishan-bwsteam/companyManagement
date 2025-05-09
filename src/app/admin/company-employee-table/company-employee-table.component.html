@@ -1,0 +1,37 @@
+<div class="container my-4">
+    <div class="row my-4 ">
+        <h2 class="col-8">Employee List</h2>
+        <div class="ml-auto col-4">
+            <a class="btn btn-info form-control" routerLink="0" ><i class="fa fa-plus"></i>&nbsp;
+                Add</a>
+        </div>
+    </div>
+    <p-table [value]="empList" [tableStyle]="{ 'min-width': '60rem' }" showGridlines>
+        <ng-template #header>
+            <tr>
+                <th>Index</th>
+                <th>Employee Name</th>
+                <th>Email</th>
+                <th>Actions</th>
+            </tr>
+        </ng-template>
+        <ng-template #body let-emp let-i="rowIndex">
+            <tr>
+                <td>{{i + 1}}</td>
+                <td>{{emp.employeeName}}</td>
+                <td> {{ emp.email }}</td>
+                <td>
+                    <div
+                        style="display: flex; flex-direction: row; flex-wrap: nowrap; width: fit-content; background: none; justify-content: space-evenly; width: 100%;">
+                        <a class="btn btn-outline-primary" routerLink="{{ emp.employeeID }}"
+                            style="width: fit-content; min-width: fit-content; border-radius: 100px;"><i
+                                class="fa-solid fa-edit"></i></a>
+                        <button class="btn btn-outline-danger"
+                            style="width: fit-content; min-width: fit-content; border-radius: 100px;"><i
+                                class="fa-solid fa-trash-alt"></i></button>
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

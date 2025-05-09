@@ -1,0 +1,440 @@
+<p-toast></p-toast>
+
+<div class="container my-4">
+  <p-stepper [(value)]="activeStep" class="w-100">
+    <p-step-list>
+      <p-step [value]="1">User Basic Info</p-step>
+      <p-step [value]="2">Employee Details</p-step>
+      <p-step [value]="3">Bank Details</p-step>
+      <p-step [value]="4">Address</p-step>
+      <p-step [value]="5">Education</p-step>
+      <p-step *ngIf="this.employeeId == 0"  [value]="6">Review & Submit</p-step>
+    </p-step-list>
+    <p-step-panels>
+
+      <!-- Step 1: User Basic Info -->
+      <p-step-panel [value]="1">
+        <ng-template #content let-activateCallback="activateCallback">
+          <form [formGroup]="userBasicForm" (ngSubmit)="activateCallback(2)">
+            <div class="form-row">
+              <div class="form-group col-md-4">
+                <label for="firstName">First Name *</label>
+                <input formControlName="firstName" class="form-control" id="firstName" />
+                <small class="text-danger" *ngIf="userBasicForm.get('firstName')?.invalid">First Name is
+                  required</small>
+              </div>
+              <div class="form-group col-md-4">
+                <label for="lastName">Last Name *</label>
+                <input formControlName="lastName" class="form-control" id="lastName" />
+                <small class="text-danger" *ngIf="userBasicForm.get('lastName')?.invalid">Last Name is required</small>
+              </div>
+              <div class="form-group col-md-4">
+                <label for="middleName">Middle Name</label>
+                <input formControlName="middleName" class="form-control" id="middleName" />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="userName">Username *</label>
+                <input formControlName="userName" class="form-control" id="userName" />
+                <small class="text-danger" *ngIf="userBasicForm.get('userName')?.invalid">Username is required</small>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="userTypeID">User Type *</label>
+                <select formControlName="userTypeID" class="form-control" id="userTypeID">
+                  <option *ngFor="let type of userTypes" [value]="type.UserTypeID">{{type.TypeName}}</option>
+                </select>
+                <small class="text-danger" *ngIf="userBasicForm.get('userTypeID')?.invalid">User Type is
+                  required</small>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="parentUserID">Parent User ID</label>
+                <input type="number" formControlName="parentUserID" class="form-control" id="parentUserID" />
+              </div>
+            </div>
+            
+            <div>
+              <button *ngIf="this.employeeId != 0" (click)="updateUserBasicDetail( $event)">
+                @if(userBasicForm.get('bankDetailID')?.value != 0){
+                Update
+                }@else{
+                Save
+                }
+              </button>
+            </div>
+            <div class="text-right">
+              <p-button type="submit" [disabled]="!userBasicForm.valid" label="Next" icon="pi pi-arrow-right"
+                iconPos="right"></p-button>
+            </div>
+          </form>
+        </ng-template>
+      </p-step-panel>
+      <!-- Step 2: Employee Details -->
+      <p-step-panel [value]="2">
+        <ng-template #content let-activateCallback="activateCallback">
+          <form [formGroup]="employeeBasicForm" (ngSubmit)="activateCallback(3)">
+            <div class="form-row">
+              <!-- Employee Code Field -->
+              <div class="form-group col-md-3">
+                <label for="empCode">Employee Code *</label>
+                <input formControlName="empCode" class="form-control" id="empCode" placeholder="e.g. BWS-12345" />
+                <small class="text-danger" *ngIf="employeeBasicForm.get('empCode')?.errors?.['required']">
+                  Employee Code is required
+                </small>
+                <small class="text-danger" *ngIf="employeeBasicForm.get('empCode')?.errors?.['pattern']">
+                  Only numbers are allowed
+                </small>
+              </div>
+
+              <div class="form-group col-md-3">
+                <label for="dob">Date of Birth *</label>
+                <p-calendar formControlName="dob" [showIcon]="true" inputId="dob" dateFormat="yy-mm-dd"
+                  [maxDate]="maxBirthDate" [defaultDate]="defaultBirthDate"></p-calendar>
+                <small class="text-danger" *ngIf="employeeBasicForm.get('dob')?.invalid">
+                  DOB is required
+                </small>
+              </div>
+
+              <!-- Date of Hiring -->
+              <div class="form-group col-md-3">
+                <label for="doh">Date of Hiring *</label>
+                <p-calendar formControlName="doh" [showIcon]="true" inputId="doh" dateFormat="yy-mm-dd"
+                  [maxDate]="today"></p-calendar>
+                <small class="text-danger" *ngIf="employeeBasicForm.get('doh')?.invalid">
+                  DOH is required
+                </small>
+              </div>
+
+              <div class="form-group col-md-3">
+                <label for="departmentID">Department *</label>
+                <select formControlName="departmentID" class="form-control" id="departmentID">
+                  <option [ngValue]="null" disabled>Select Department</option>
+                  <option *ngFor="let dept of departments" [value]="dept.departmentId">{{dept.departmentName}}</option>
+                </select>
+                <small class="text-danger" *ngIf="employeeBasicForm.get('departmentID')?.invalid">
+                  Department is required
+                </small>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group col-md-3">
+                <label for="employeeStatusID">Status *</label>
+                <select formControlName="employeeStatusID" class="form-control" id="employeeStatusID">
+                  <option *ngFor="let status of employeeStatusOptions" [value]="status.id">
+                    {{status.name}}
+                  </option>
+                </select>
+              </div>
+
+              <div class="form-group col-md-3">
+                <label for="bloodGroup">Blood Group</label>
+                <select formControlName="bloodGroup" class="form-control" id="bloodGroup">
+                  <option *ngFor="let bg of bloodGroupOptions" [value]="bg">{{bg}}</option>
+                </select>
+              </div>
+
+
+
+              <div class="form-group col-md-3">
+                <label for="roleId">Role *</label>
+                <select formControlName="roleId" class="form-control" id="roleId">
+                  <option [ngValue]="null" disabled>Select Role</option>
+                  <option *ngFor="let role of roles" [value]="role.id">{{role.name}}</option>
+                </select>
+                <small class="text-danger" *ngIf="employeeBasicForm.get('roleId')?.invalid">
+                  Role is required
+                </small>
+              </div>
+
+              <div class="form-group col-md-3">
+                <label for="emailID">Email</label>
+                <input type="text" formControlName="emailID" class="form-control" id="emailID" />
+              </div>
+            </div>
+
+            <div>
+              <button *ngIf="this.employeeId != 0" (click)="updateEmployeeDetail($event)">
+                @if(employeeBasicForm.get('empId')?.value != 0){
+                Update
+                }@else{
+                Save
+                }
+              </button>
+            </div>
+            <div class="text-right mt-3">
+              <button type="button" pButton label="Back" severity="secondary" (click)="activateCallback(1)"
+                class="mr-2"></button>
+              <button type="submit" pButton label="Next" icon="pi pi-arrow-right" iconPos="right"
+                [disabled]="!employeeBasicForm.valid"></button>
+            </div>
+          </form>
+        </ng-template>
+      </p-step-panel>
+      <!-- Step 2: Bank Details -->
+      <p-step-panel [value]="3">
+        <ng-template #content let-activateCallback="activateCallback">
+          <form [formGroup]="userBankForm" (ngSubmit)="activateCallback(4)">
+            <div class="form-row">
+              <div class="form-group col-md-4">
+                <label for="bankName">Bank Name *</label>
+                <input formControlName="bankName" class="form-control" id="bankName" />
+                <small class="text-danger" *ngIf="userBankForm.get('bankName')?.invalid">Bank Name is required</small>
+              </div>
+              <div class="form-group col-md-4">
+                <label for="ifscCode">IFSC Code *</label>
+                <input formControlName="ifscCode" class="form-control" id="ifscCode" />
+                <small class="text-danger" *ngIf="userBankForm.get('ifscCode')?.invalid">IFSC Code is required</small>
+              </div>
+              <div class="form-group col-md-4">
+                <label for="accountNo">Account No *</label>
+                <input formControlName="accountNo" class="form-control" id="accountNo" />
+                <small class="text-danger" *ngIf="userBankForm.get('accountNo')?.invalid">Account No is required</small>
+              </div>
+            </div>
+
+            <div>
+              <button *ngIf="this.employeeId != 0" (click)="updateBankDetails( $event)">
+                @if(userBankForm.get('bankDetailID')?.value != 0){
+                Update
+                }@else{
+                Save
+                }
+              </button>
+            </div>
+            <div class="text-right">
+              <button type="button" pButton label="Back" severity="secondary" (click)="activateCallback(2)"
+                class="mr-2"></button>
+              <p-button type="submit" [disabled]="!userBankForm.valid" label="Next" icon="pi pi-arrow-right"
+                iconPos="right"></p-button>
+            </div>
+          </form>
+        </ng-template>
+      </p-step-panel>
+
+      <!-- Step 3: Address -->
+      <p-step-panel [value]="4">
+        <ng-template #content let-activateCallback="activateCallback">
+          <form (ngSubmit)="activateCallback(5)">
+            <div *ngFor="let addressForm of addressForms; let i = index" class="mb-4 p-3 border rounded">
+              <div class="d-flex justify-content-between mb-2">
+                <h5>Address {{i + 1}}</h5>
+                <button type="button" pButton icon="pi pi-times" class="p-button-rounded p-button-danger p-button-text"
+                  (click)="removeAddress(i)" *ngIf="addressForms.length > 1"></button>
+              </div>
+
+              <div class="form-row" [formGroup]="addressForm">
+                <div class="form-group col-md-6">
+                  <label for="addressLine1-{{i}}">Address Line 1</label>
+                  <input formControlName="addressLine1" class="form-control" [id]="'addressLine1-' + i" />
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="addressLine2-{{i}}">Address Line 2</label>
+                  <input formControlName="addressLine2" class="form-control" [id]="'addressLine2-' + i" />
+                </div>
+              </div>
+
+              <!-- Rest of the address fields -->
+              <div class="form-row" [formGroup]="addressForm">
+                <div class="form-group col-md-4">
+                  <label [for]="'city-' + i">City</label>
+                  <input formControlName="city" class="form-control" [id]="'city-' + i" />
+                </div>
+                <div class="form-group col-md-4">
+                  <label [for]="'countryId-' + i">Country</label>
+                  <select formControlName="countryId" class="form-control" [id]="'countryId-' + i"
+                    (change)="onCountryChange(addressForm.get('countryId')?.value, i)">
+                    <option [value]="null">Select Country</option>
+                    <option *ngFor="let country of countries" [value]="country.countryId">{{country.countryName}}
+                    </option>
+                  </select>
+                </div>
+                <div class="form-group col-md-4">
+                  <label [for]="'stateId-' + i">State</label>
+                  <select formControlName="stateId" class="form-control" [id]="'stateId-' + i">
+                    <option [value]="null">Select State</option>
+                    <option *ngFor="let state of getFilteredStates(i)" [value]="state.stateId">{{state.stateName}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-row" [formGroup]="addressForm">
+                <div class="form-group col-md-6">
+                  <label [for]="'zipCode-' + i">Zip Code</label>
+                  <input formControlName="zipCode" class="form-control" [id]="'zipCode-' + i" />
+                </div>
+                <div class="form-group col-md-6">
+                  <label [for]="'addressTypeID-' + i">Address Type</label>
+                  <select formControlName="addressTypeID" class="form-control" [id]="'addressTypeID-' + i">
+                    <option [value]="null">Select Address Type</option>
+                    <option *ngFor="let type of addressTypes" [value]="type.addressTypeID">{{type.typeName}}</option>
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <button *ngIf="this.employeeId != 0" (click)="updateAddress(i, $event)">
+                  @if(addressForms[i].get('userAddressId')?.value != 0){
+                  Update
+                  }@else{
+                  Save
+                  }
+                </button>
+
+              </div>
+            </div>
+
+            <div class="d-flex justify-content-between mt-3">
+              <button type="button" pButton label="Add Another Address" icon="pi pi-plus" class="p-button-secondary"
+                (click)="addAddress()"></button>
+              <div>
+                <button type="button" pButton label="Back" severity="secondary" (click)="activateCallback(3)"
+                  class="mr-2"></button>
+                <button type="submit" pButton label="Next" icon="pi pi-arrow-right" iconPos="right"></button>
+              </div>
+            </div>
+          </form>
+        </ng-template>
+      </p-step-panel>
+
+      <!-- Step 4: Education -->
+      <p-step-panel [value]="5">
+        <!-- Step 4: Education -->
+        <ng-template #content let-activateCallback="activateCallback">
+          <form (ngSubmit)="activateCallback(6)">
+            <div *ngFor="let educationForm of educationForms; let i = index" class="mb-4 p-3 border rounded">
+              <div class="d-flex justify-content-between mb-2">
+                <h5>Education {{i + 1}}</h5>
+                <button type="button" pButton icon="pi pi-times" class="p-button-rounded p-button-danger p-button-text"
+                  (click)="removeEducation(i)" *ngIf="educationForms.length > 1"></button>
+              </div>
+
+              <div class="form-row" [formGroup]="educationForm">
+                <div class="form-group col-md-3">
+                  <label [for]="'degreeName-' + i">Degree Name</label>
+                  <input formControlName="degreeName" class="form-control" [id]="'degreeName-' + i" />
+                </div>
+                <div class="form-group col-md-3">
+                  <label [for]="'instName-' + i">Institution Name</label>
+                  <input formControlName="instName" class="form-control" [id]="'instName-' + i" />
+                </div>
+                <div class="form-group col-md-3">
+                  <label [for]="'passingYear-' + i">Passing Year *</label>
+                  <p-calendar formControlName="passingYear" [showIcon]="true" inputId="passingYear"
+                    dateFormat="yy-mm-dd" [maxDate]="today"></p-calendar>
+                </div>
+                <!-- <div class="form-group col-md-3">
+                  <label [for]="'passingYear-' + i">Passing Year</label>
+                  <input type="date" formControlName="passingYear" class="form-control" [id]="'passingYear-' + i" />
+                </div> -->
+                <div class="form-group col-md-3">
+                  <label [for]="'percentage-' + i">Percentage</label>
+                  <input type="number" step="0.01" formControlName="percentage" class="form-control"
+                    [id]="'percentage-' + i" />
+                </div>
+              </div>
+
+              <div>
+                <button *ngIf="this.employeeId != 0" (click)="updateEducation(i, $event)">
+                  @if(educationForms[i].get('educationId')?.value != 0){
+                  Update
+                  }@else{
+                  Save
+                  }
+                </button>
+
+              </div>
+            </div>
+
+            <div class="d-flex justify-content-between mt-3">
+              <button type="button" pButton label="Add Another Education" icon="pi pi-plus" class="p-button-secondary"
+                (click)="addEducation()"></button>
+              <div>
+                <button type="button" pButton label="Back" severity="secondary" (click)="activateCallback(4)"
+                  class="mr-2"></button>
+                <button *ngIf="this.employeeId == 0"  type="submit" pButton label="Next" icon="pi pi-arrow-right" iconPos="right"></button>
+              </div>
+            </div>
+          </form>
+        </ng-template>
+      </p-step-panel>
+
+      <!-- Step 5: Review & Submit -->
+      <p-step-panel [value]="6" *ngIf="this.employeeId == 0" >
+        <!-- Step 5: Review & Submit -->
+        <ng-template #content let-activateCallback="activateCallback">
+          <div class="container">
+            <p><strong>Review your details:</strong></p>
+
+
+            <h4>Employee Details</h4>
+            <div class="row mb-4">
+              <div class="col-md-6">
+                <p><strong>Employee Code:</strong> {{ employeeBasicForm.value.empCode || 'N/A' }}</p>
+                <p><strong>Date of Birth:</strong>
+                  {{ employeeBasicForm.value.dob ? (employeeBasicForm.value.dob | date:'yyyy-MM-dd') : 'N/A' }}
+                </p>
+                <p><strong>Date of Hiring:</strong>
+                  {{ employeeBasicForm.value.doh ? (employeeBasicForm.value.doh | date:'yyyy-MM-dd') : 'N/A' }}
+                </p>
+              </div>
+              <div class="col-md-6">
+                <p><strong>Department:</strong> {{ getDepartmentName(employeeBasicForm.value.departmentID) || 'N/A' }}
+                </p>
+                <p><strong>Status:</strong> {{ getEmployeeStatusName(employeeBasicForm.value.employeeStatusID) || 'N/A'
+                  }}</p>
+                <p><strong>Blood Group:</strong> {{ employeeBasicForm.value.bloodGroup || 'N/A' }}</p>
+              </div>
+            </div>
+            <div class="row mb-4">
+              <div class="col-md-6">
+                <p><strong>Role:</strong> {{ getRoleName(employeeBasicForm.value.roleId) || 'N/A' }}</p>
+              </div>
+            </div>
+
+            <p><strong>User Basic Info:</strong></p>
+            <p>First Name: {{ userBasicForm.get('firstName')?.value || 'N/A' }}</p>
+            <p>Last Name: {{ userBasicForm.get('lastName')?.value || 'N/A' }}</p>
+            <p>Username: {{ userBasicForm.get('userName')?.value || 'N/A' }}</p>
+
+            <p><strong>Bank Details:</strong></p>
+            <p>Bank Name: {{ userBankForm.get('bankName')?.value || 'N/A' }}</p>
+            <p>IFSC Code: {{ userBankForm.get('ifscCode')?.value || 'N/A' }}</p>
+            <p>Account No: {{ userBankForm.get('accountNo')?.value || 'N/A' }}</p>
+            <!-- Addresses Section -->
+            <p><strong>Addresses:</strong></p>
+            <div *ngFor="let address of addressForms; let i = index" class="mb-3 p-2 border rounded">
+              <h6>Address {{i + 1}}</h6>
+              <p>Address: {{ address.get('addressLine1')?.value || 'N/A' }}</p>
+              <p>Address Line 2: {{ address.get('addressLine2')?.value || 'N/A' }}</p>
+              <p>City: {{ address.get('city')?.value || 'N/A' }}</p>
+              <p>State: {{ getStateName(address.get('stateId')?.value) || 'N/A' }}</p>
+              <p>Country: {{ getCountryName(address.get('countryId')?.value) || 'N/A' }}</p>
+              <p>Zip Code: {{ address.get('zipCode')?.value || 'N/A' }}</p>
+              <p>Address Type: {{ getAddressTypeName(address.get('addressTypeID')?.value) || 'N/A' }}</p>
+            </div>
+
+            <!-- Education Section -->
+            <p><strong>Education:</strong></p>
+            <div *ngFor="let education of educationForms; let i = index" class="mb-3 p-2 border rounded">
+              <h6>Education {{i + 1}}</h6>
+              <p>Degree: {{ education.get('degreeName')?.value || 'N/A' }}</p>
+              <p>Institution: {{ education.get('instName')?.value || 'N/A' }}</p>
+              <p>Passing Year: {{ education.get('passingYear')?.value ? (education.get('passingYear')?.value |
+                date:'yyyy') : 'N/A' }}</p>
+              <p>Percentage: {{ education.get('percentage')?.value || 'N/A' }}%</p>
+            </div>
+
+            <div class="text-right">
+              <button type="button" pButton label="Back" severity="secondary" (click)="activateCallback(5)"
+                class="mr-2"></button>
+              <button type="button" pButton label="Submit" [disabled]="!isFormValid()" (click)="submitForm()"></button>
+            </div>
+          </div>
+        </ng-template>
+        <div class="text-right">
+          <p-button label="Back" severity="secondary" (onClick)="activateCallback(4)"></p-button>
+          <p-button label="Submit" [disabled]="!isFormValid()" (onClick)="submitForm()"></p-button>

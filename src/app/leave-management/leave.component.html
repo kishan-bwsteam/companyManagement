@@ -1,0 +1,32 @@
+<div>
+
+    <div class="row m-4">
+        <h1 class="text-dark col-10">Leave Managment</h1>
+        <!-- <div class="col-2" style="align-items: center;">
+            <button class="btn btn-primary form-control" style="height: 40px; margin-left: auto;"
+                (click)="changeLeaveWin()">{{leaveApplyWin? 'Apply': 'My'}} Leave</button>
+        </div> -->
+    </div>
+    <p-tabs value="0" lazy="true">
+        <p-tablist>
+            <p-tab value="0">My Leaves</p-tab>
+            <!-- <p-tab value="1">Leave Requests</p-tab> -->
+            <p-tab value="2">Apply</p-tab>
+        </p-tablist>
+        <p-tabpanels>
+            <p-tabpanel value="0">
+                <app-my-leave></app-my-leave>
+            </p-tabpanel>
+            <!-- <p-tabpanel value="1">
+                <app-leave-requests></app-leave-requests>
+            </p-tabpanel> -->
+            <p-tabpanel value="2">
+                <app-apply-leave></app-apply-leave>
+            </p-tabpanel>
+        </p-tabpanels>
+    </p-tabs>
+
+    
+
+
+</div>

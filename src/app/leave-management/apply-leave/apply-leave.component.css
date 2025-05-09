@@ -1,0 +1,44 @@
+.leaveApply-div {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+
+.leavesTable-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.leaveApplyWin {
+    display: none;
+}
+.leaveWin {
+    transform: scale(0);
+}
+
+#leaveAnalyticsHeading {
+    color: white;
+    padding: 12px;
+    background: linear-gradient(to left, rgb(206 80 80 / 0%), rgb(211 50 50 / 87%) 50%, rgb(255 0 0 / 0%));
+}
+
+.hoverscaleEffect {
+    transition: transform 1s;
+}
+
+.hoverscaleEffect:hover {
+    transform: scale(1.05);
+}
+.radio-btn-group {
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.radio-btn-group label {
+    margin: 0;
+}

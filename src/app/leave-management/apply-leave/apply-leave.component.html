@@ -1,0 +1,112 @@
+<div class="leaveApply-div">
+
+    <div style="padding:20px; padding-top: 0px; flex: 1; transition: transform 1s;">
+        <h3 class="text-center" id="leaveAnalyticsHeading">Leave Analytics</h3>
+        <!-- <p-chart type="bar" [data]="basicData" [options]="basicOptions" width="500px" /> -->
+        <!-- <p-chart type="pie" [data]="leaveStats"  class="w-full md:w-[30rem]" /> -->
+        <div
+            style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: center; width: 100%; padding: 10px;">
+            <div *ngFor="let item of pieData; index as i" style="min-width: 32vh;">
+                <h5 class="text-primary text-center">{{ leaveType[i].name }}</h5>
+                <p-chart type="pie" [data]="pieData[i]" [options]="pieOptions[i]" class="w-full"></p-chart>
+            </div>
+            <!-- <p-chart type="pie" [data]="pieData" [options]="pieOptions" class="w-full md:w-[30rem]"></p-chart>
+            <p-chart type="pie" [data]="pieData" [options]="pieOptions" class="w-full md:w-[30rem]"></p-chart> -->
+        </div>
+    </div>
+
+
+
+
+
+    <div style=" flex: 1; align-content: center; ">
+
+        <div class="hoverscaleEffect"
+            style="margin: auto; max-width: 400px; border-radius: 10px; box-shadow: 4px 4px 15px 1px #a35858; padding-top:10px; ">
+            <div style="background: none; border-radius: 10px;">
+
+                <h3 class="text-center" style="padding: 20px; background-color: #e57979;color: white; margin:0;">
+                    Leave Card</h3>
+            </div>
+            <div style="padding: 20px 40px;">
+                <form [formGroup]="leaveForm" (ngSubmit)="handleSubmit()">
+                    <select class="form-control col-12 text-center m-2 p-1"
+                        style="border-bottom: 1px #e2dada solid; font-weight:500;font-size: larger;"
+                        formControlName="leaveTypeId">
+                        <option value="0">Select Leave Type</option>
+                        <option *ngFor="let item of leaveTypes; index as i" [value]="item.leaveReasonId"> {{
+                            item.reasonName }}
+                        </option>
+
+                    </select>
+                    <div style="display: flex; flex-direction: row; flex-wrap: nowrap; justify-content: center;">
+                        <div *ngFor="let Dtype of durationTypes" class="radio-btn-group">
+                            <p-radiobutton [value]="Dtype.id" formControlName="durationTypeId" />
+                            <label class="ml-2">{{ Dtype.type }}</label>
+                        </div>
+                    </div>
+                    <!-- <div class="col-12 text-center m-2 p-1"
+                    style="border-bottom: 1px #e2dada solid; border-radius: 20px;">
+                    <h3 class="text-primary">{{ selectedLeaveType? selectedLeaveType.name:"--" }}</h3>
+                </div> -->
+
+                    <div *ngIf="durationTypeId === 2">
+                        <div style="display: flex; flex-direction: row; flex-wrap: nowrap; justify-content: center;">
+                            <div class="radio-btn-group">
+                                <p-radiobutton formControlName="halfParition" [value]="1" size="large" />
+                                <label for="size_small" class="text-sm">First Half</label>
+                            </div>
+                            <div class="w-full md:w-2/12">
+                                <p-divider layout="vertical" class="!hidden md:!flex"><b>OR</b></p-divider>
+
+                            </div>
+                            <div class="radio-btn-group">
+                                <p-radiobutton formControlName="halfParition" [value]="2" size="large" />
+                                <label for="size_normal">Second Half</label>
+                            </div>
+                        </div>
+                        <span class="text-danger">{{errors.halfTimePeriod}}</span>
+                    </div>
+
+                    <div class="row my-2">
+                        <div class="col-6">
+                            <label>Starting Date</label>
+                            <input [min]="minDate | date:'yyyy-MM-dd'" [max]="maxDate | date:'yyyy-MM-dd'"
+                                name="Start Date" type="date" formControlName="fromDate" class="form-control" />
+                        </div>
+                        <div class="col-6">
+                            <label>End Date</label>
+                            <input [min]="minDate | date:'yyyy-MM-dd'" [max]="maxDate | date:'yyyy-MM-dd'"
+                                name="End Date" type="date" formControlName="toDate" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row my-2">
+                        <div class="col-6">
+                            <label>Starting Time</label>
+                            <input name="Start Date" type="time" formControlName="fromTime" class="form-control" />
+                        </div>
+                        <div class="col-6">
+                            <label>End Time</label>
+                            <input name="End Date" type="time" formControlName="toTime" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group my-2">
+                        <!-- <label for="exampleFormControlTextarea1">Reason</label>
+                        <textarea formControlName="reason" class="form-control" id="exampleFormControlTextarea1"
+                            rows="3"></textarea> -->
+                        <form [formGroup]="attachmentForm" (ngSubmit)="uploadFile()" enctype="multipart/form-data">
+
+                            <label for="attachment">Attachment</label>
+                            <input type="file" (change)="onFileChange($event)"  />
+                            <input type="submit" value="upload"  [disabled]="!attachmentForm.valid"/>
+                            <span>{{ isUploaded }}</span>
+                        </form>
+                    </div>
+                    <div class="row m-1 my-4">
+                        <input class="btn btn-outline-success col-12" type="submit" value="Request Leave" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,70 @@
+<!-- <div class="leavesTable-div" >
+    <p-table [value]="leaves" [tableStyle]="{ 'min-width': '50rem' }" showGridlines>
+        <ng-template #header>
+            <tr>
+                <th>Index</th>
+                <th>Leave Type</th>
+                <th>Applied On</th>
+                <th>Reason</th>
+                <th>Type</th>
+                <th>From</th>
+                <th>To</th>
+                <th>Duration</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </ng-template>
+        <ng-template #body let-lv let-i="rowIndex">
+            <tr>
+                <td>{{i + 1}}</td>
+                <td>{{ getLeaveTypeName(lv.leaveTypeId) }}</td>
+                <td>{{ formatDate(lv.createdAt) }}</td>
+                <td>{{ lv.reason}}</td>
+                <td>{{ findLeaveTypeName(lv.leaveTypeId)}}</td>
+                <td>{{ formatDate(lv.leaveFrom)}}</td>
+                <td>{{ formatDate(lv.leaveTo)}}</td>
+                <td>{{ lv.duration }}</td>
+                <td>
+                    <p-tag [value]="getLeaveStatusString(lv.status)"
+                        [severity]="getLeaveStatusSeverity(lv.status)" />
+                </td>
+                <td><button class="btn btn-danger" *ngIf="lv.status != 4 && lv.status != 3"
+                        (click)="cancelLeave(lv.id)">Cancel</button></td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+</div> -->
+
+
+
+
+
+<div class="leavesTable-div" >
+    <p-table [value]="leaves" [tableStyle]="{ 'min-width': '50rem' }" showGridlines>
+        <ng-template #header>
+            <tr>
+                <th>Index</th>
+                <th>Reason</th>
+                <th>From</th>
+                <th>To</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </ng-template>
+        <ng-template #body let-lv let-i="rowIndex">
+            <tr>
+                <td>{{i + 1}}</td>
+                <td>{{ lv.reasonName }}</td>
+                <td>{{ lv.fromDate | date:'dd/MM/yyyy HH:mm'}}</td>
+                <td>{{ lv.toDate | date:'dd/MM/yyyy HH:mm'}}</td>
+                <td>
+                    <p-tag [value]="lv.statusName"/>
+                </td>
+                <td><button class="btn btn-danger" 
+                        (click)="cancelLeave(lv.leaveRequestID)">Cancel</button></td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+</div>

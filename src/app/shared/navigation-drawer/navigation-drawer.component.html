@@ -1,0 +1,148 @@
+<!-- <p-drawer [(visible)]="this.global.drawerVisible" position="left" [closable]="true" [modal]="true">
+
+  <ng-template pTemplate="header">
+    <a routerLink="/profile" (click)="changeActive($event)" data-link="profile">
+      <div class="profile">
+        <div style="background-color: #bababa78; border-radius: 100px; margin-right:17px;">
+          <img style="border-radius: 100px; height: 70px; width: 70px; object-fit: cover;"
+            src="{{ this.global.getImageUrl() }}" alt="">
+        </div>
+        <h5>{{ this.global.token.sub }}</h5>
+      </div>
+    </a>
+  </ng-template>
+
+  <div id="drawer-body">
+    <ul class="nav flex-column">
+      <li class="nav-item">
+        <a class="nav-link" (click)="changeActive($event)" data-link="role" data-toggle="modal"
+          data-target="#roleModal">
+          <i class="fa fa-plus"></i>&nbsp; Add Role</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" (click)="changeActive($event)" data-link="department" data-toggle="modal"
+          data-target="#depModal">
+          <i class="fa fa-plus"></i>&nbsp;Add Department</a>
+      </li>
+      <li *ngIf="this.global.isAdmin()">
+        <a routerLink="/report" [class.active]="drawerActiveLinks['report']" class="nav-link"
+          (click)="changeActive($event)" data-link="report">
+          <i class="fa fa-file"></i>&nbsp; Report</a>
+      </li>
+      <li *ngIf="!this.global.isAdmin()">
+        <a routerLink="/leave" [class.active]="drawerActiveLinks['leave']" class="nav-link"
+          (click)="changeActive($event)" data-link="leave">
+          <i class="fa-solid fa-file"></i>&nbsp; Leave</a>
+      </li>
+
+    </ul>
+  </div>
+
+</p-drawer> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div style="height: 100%;" class="drawerWidth" [class.drawerOpenWidth]="this.global.drawerVisible">
+
+
+
+  <div id="nav-bar"
+    style="position: fixed;left: 0;top:0; bottom: 0;border-radius: 0;margin:0; z-index: 0; width: fit-content;;color: white;">
+    <div id="nav-header" class="drawerWidth" [class.drawerOpenWidth]="this.global.drawerVisible">
+
+      <hr />
+    </div>
+    <div id="nav-content" class="drawerWidth" [class.aligncenter]="!this.global.drawerVisible">
+
+      <ng-container *ngIf="this.global.isSuperAdmin()">
+        <div class="nav-button"><i class="fa-solid fa-ticket"></i><span
+            [class.displayNone]="!this.global.drawerVisible">Support Ticket</span></div>
+      </ng-container>
+
+      <ng-container *ngIf="this.global.isAdmin() && this.router.url.includes('company/')">
+        
+        <a (click)="navigateCompanyChild('departmentTable')">
+          <div class="nav-button"><i class="fa-solid fa-building"></i><span
+              [class.displayNone]="!this.global.drawerVisible">Department</span></div>
+        </a>
+        
+        <a (click)="navigateCompanyChild('positionTable')">
+          <div class="nav-button"><i class="fa-solid fa-chart-simple"></i><span
+              [class.displayNone]="!this.global.drawerVisible">Postion</span></div>
+        </a>
+
+        <a (click)="navigateCompanyChild('employeeTable')">
+          <div class="nav-button"><i class="fa-solid fa-users"></i><span
+              [class.displayNone]="!this.global.drawerVisible">Employees</span></div>
+        </a>
+      </ng-container>
+
+      <ng-container *ngIf="this.global.isAdmin() && !this.router.url.includes('company/')">
+        <a>
+          <div class="nav-button"><i class="fa-solid fa-user"></i><span
+              [class.displayNone]="!this.global.drawerVisible">User</span></div>
+        </a>
+        <div class="nav-button"><i class="fa-solid fa-chart-simple"></i><span
+            [class.displayNone]="!this.global.drawerVisible">Role</span></div>
+        <a routerLink="companyTable">
+          <div class="nav-button"><i class="fa-solid fa-city"></i><span
+              [class.displayNone]="!this.global.drawerVisible">Company</span></div>
+        </a>
+        <div class="nav-button"><i class="fa-solid fa-ticket"></i><span
+            [class.displayNone]="!this.global.drawerVisible">Support Ticket</span></div>
+      </ng-container>
+
+      <ng-container *ngIf="this.global.isUser()">
+        <div class="nav-button"><i class="fa-solid fa-ticket"></i><span
+            [class.displayNone]="!this.global.drawerVisible">Support Ticket</span></div>
+      </ng-container>
+
+      <ng-container *ngIf="this.global.isEmployee()">
+        <a routerLink='profile'>
+          <div class="nav-button"><i class="fas fa-user"></i><span
+              [class.displayNone]="!this.global.drawerVisible">Profile</span></div>
+        </a>
+        <a routerLink='leave'>
+          <div class="nav-button"><i class="fa-solid fa-sheet-plastic"></i><span
+              [class.displayNone]="!this.global.drawerVisible">Leave</span></div>
+        </a>
+        <div class="nav-button"><i class="fa-solid fa-envelope"></i><span
+            [class.displayNone]="!this.global.drawerVisible">Mails</span></div>
+        <div class="nav-button"><i class="fa-solid fa-calendar-days"></i><span
+            [class.displayNone]="!this.global.drawerVisible">Attendance</span></div>
+        <div class="nav-button"><i class="fa-solid fa-ticket"></i><span
+            [class.displayNone]="!this.global.drawerVisible">Support Ticket</span></div>
+      </ng-container>
+      <!-- <div id="nav-content-highlight"></div> -->
+    </div>
+    <!-- <input id="nav-footer-toggle" type="checkbox" />
+    <div id="nav-footer" class="drawerWidth" [class.drawerOpenWidth]="this.global.drawerVisible">
+      <div id="nav-footer-heading">
+        <div id="nav-footer-avatar"><img src="https://gravatar.com/avatar/4474ca42d303761c2901fa819c4f2547" /></div>
+        <div id="nav-footer-titlebox"><a id="nav-footer-title" href="https://codepen.io/uahnbu/pens/public"
+            target="_blank">uahnbu</a><span id="nav-footer-subtitle">Admin</span></div>
+        <label for="nav-footer-toggle"><i class="fas fa-caret-up"></i></label>
+      </div>
+      <div id="nav-footer-content">
+         </div>
+    </div> -->
+  </div>
+
+
+
+
+
+</div>

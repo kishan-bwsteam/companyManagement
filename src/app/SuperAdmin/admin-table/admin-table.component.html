@@ -1,0 +1,33 @@
+<p-table [value]="adminlist" 
+         [paginator]="true" 
+         [rows]="rows" 
+         [totalRecords]="totalRecords"
+         [lazy]="true" 
+         (onPage)="onPageChange($event)"
+         [loading]="loading"
+         showGridlines 
+         [tableStyle]="{ 'min-width': '50rem' }">
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Id</th>
+            <th>User Name</th>
+            <th>Name</th>
+            <th>isActive</th>
+            <th>Actions</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-admin>
+        <tr>
+            <td>{{ admin.userID }}</td>
+            <td>{{ admin.userName }}</td>
+            <td>{{ admin.firstName }} {{ admin.middleName }} {{ admin.lastName }}</td>
+            <td>{{ admin.isActive }}</td>
+            <td>
+                <div class="row" style="justify-content: center;">
+                    <a class="btn btn-primary" routerLink="/createAdmin/{{admin.userID}}"><i class="fa fa-edit"></i></a>
+                    <button class="btn btn-danger"><i class="fa fa-trash-alt"></i></button>
+                </div>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>

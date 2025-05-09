@@ -1,0 +1,9 @@
+
+<app-header *ngIf="global.isAuthenticated()" style="position: fixed; top: 0; left: 0; right: 0; z-index: 100;"></app-header>
+
+<div style="display: flex; flex-direction: row; flex-wrap: nowrap; overflow-y: none; margin-top: 55px;">
+
+  <app-navigation-drawer *ngIf="global.isAuthenticated()"></app-navigation-drawer>
+  <router-outlet></router-outlet>
+
+</div>

@@ -1,0 +1,32 @@
+<p-toast></p-toast>
+<form [formGroup]="depForm" (ngSubmit)="submitForm()" class="m-5" style="display: flex; flex-direction: column; width: 300px;">
+    <div class="form-group">
+        <label for="name">Department Name</label>
+        <input
+            id="name"
+            formControlName="name"
+            class="form-control"
+            placeholder="Enter Department Name"
+        />
+        <div *ngIf="f['name'].touched && f['name'].invalid" class="invalid-feedback">
+            <div *ngIf="f['name'].errors?.['required']">Department Name is required.</div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="abberivation">Abbreviation</label>
+        <input
+            id="abberivation"
+            formControlName="abberivation"
+            class="form-control"
+            placeholder="Enter Abbreviation"
+        />
+        <div *ngIf="f['abberivation'].touched && f['abberivation'].invalid" class="invalid-feedback">
+            <div *ngIf="f['abberivation'].errors?.['required']">Abbreviation is required.</div>
+        </div>
+    </div>
+
+    <button type="submit" [disabled]="depForm.invalid" class="btn btn-primary mt-3">
+        {{ depObject.departmentId != 0 ? 'Update' : 'Create' }}
+    </button>
+</form>
