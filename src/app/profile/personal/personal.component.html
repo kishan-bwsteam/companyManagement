@@ -15,10 +15,10 @@
                     <p class="detailName">Email Address</p>
                     <a class="detail">{{ empDetails.emailID }}</a>
                 </div>
-                <div>
+                <!-- <div>
                     <p class="detailName">Phone Number</p>
                     <p class="detail">{{ empDetails.primaryPhoneNo }}</p>
-                </div>
+                </div> -->
                 <!-- <div>
                     <p class="detailName">Office</p>
                     <a class="detail">23 Zirakpur, 432748</a>
@@ -36,17 +36,17 @@
             </div>
             <div class="row detail-font px-2">
                 <p class="col-6">First Name:</p>
-                <p class="col-6">{{ empDetails.firstName }} </p>
+                <p class="col-6">{{ empDetails.userBasic.firstName }} </p>
             </div>
             <div class="separator mb-3"></div>
             <div class="row detail-font px-2">
                 <p class="col-6">Middle Name:</p>
-                <p class="col-6">{{ empDetails.middleName }} </p>
+                <p class="col-6">{{ empDetails.userBasic.middleName }} </p>
             </div>
             <div class="separator mb-3"></div>
             <div class="row detail-font px-2">
                 <p class="col-6">Last Name:</p>
-                <p class="col-6">{{ empDetails.lastName }} </p>
+                <p class="col-6">{{ empDetails.userBasic.lastName }} </p>
             </div>
             <div class="separator mb-3"></div>
 
@@ -70,15 +70,11 @@
                 <h4>Address Details</h4>
                 <!-- <a class="ml-auto">Edit <i class="fa fa-edit"></i></a> -->
             </div>
-            <div class="row detail-font px-2">
-                <p class="col-4">Current Address:</p>
-                <p class="col-8">{{ getFormatedAddress() }}</p>
+            <div *ngFor="let addr of this.empDetails.userAddress" class="row detail-font px-2">
+                <p class="col-4">{{ addr.userAddressTypeName }}:</p>
+                <p class="col-8">{{ addr.addressLine1 }} {{ addr.addressLine2 }}, {{ addr.city }}, {{ addr.stateName }}, {{ addr.countryName }}, {{ addr.zipCode }}</p>
             </div>
             <div class="separator mb-3"></div>
-            <div class="row detail-font px-2">
-                <p class="col-4">Permanent Address:</p>
-                <p class="col-8">{{ getFormatedAddress() }}</p>
-            </div>
         </div>
         <div class="detail-card p-4" style="width: 100%;">
             <div class="row mx-2 mb-4">
@@ -87,17 +83,17 @@
             </div>
             <div class="row detail-font px-2">
                 <p class="col-6">Bank Name:</p>
-                <p class="col-6">{{ bankDetails.bankName }}</p>
+                <p class="col-6">{{ empDetails.userBankDetail.bankName }}</p>
             </div>
             <div class="separator mb-3"></div>
             <div class="row detail-font px-2">
                 <p class="col-6">Account Number:</p>
-                <p class="col-6"> {{ bankDetails.accountNo }}</p>
+                <p class="col-6"> {{ empDetails.userBankDetail.ifscCode }}</p>
             </div>
             <div class="separator mb-3"></div>
             <div class="row detail-font px-2">
                 <p class="col-6">IFSC Code:</p>
-                <p class="col-6">{{ bankDetails.ifscCode | uppercase }}</p>
+                <p class="col-6">{{ empDetails.userBankDetail.accountNo }}</p>
             </div>
         </div>
     </div>

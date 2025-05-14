@@ -24,7 +24,11 @@ export class UserbasicService {
     })
     return this.http.post(this.global.baseUrl + "api/User", usr, { headers: header });
   }
-  // delete(id:any){
-  //   return this.http.delete(this.global.baseUrl + "api/Department/" + id);
-  // }
+  delete(id:any){
+    var token = sessionStorage.getItem("token");
+    var header = new HttpHeaders({
+      "Authorization": "Bearer " + token
+    })
+    return this.http.delete(this.global.baseUrl + "api/User/User/" + id,{headers: header});
+  }
 }

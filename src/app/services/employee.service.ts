@@ -16,28 +16,35 @@ export class EmployeeService {
   getall(companyId: any) {
     return this.http.get(this.global.baseUrl + "api/employee/" + companyId.toString());
   }
-  getSingle(id: any) {
-    return this.http.get(this.global.baseUrl + "api/employee/Role/" + id);
-  }
+  // getSingle(id: any) {
+  //   return this.http.get(this.global.baseUrl + "api/employee/Role/" + id);
+  // }
 
-  getById(employeeId: number): Observable<EmployeeModel> {
-    return this.http.get<EmployeeModel>(`${this.global.baseUrl}api/employee/${employeeId}`);
+  getByEmpId(employeeId: number): Observable<EmployeeModel> {
+    return this.http.get<EmployeeModel>(`${this.global.baseUrl}api/employee?EmpId=${employeeId}`);
+  }
+  getByUserId(userId: number): Observable<EmployeeModel> {
+    return this.http.get<EmployeeModel>(`${this.global.baseUrl}api/employee?UserId=${userId}`);
   }
   create(emp: EmployeeModel) {
     var token = sessionStorage.getItem("token");
     var header = new HttpHeaders({
       "Authorization": "Bearer " + token
     })
-    return this.http.post(this.global.baseUrl + "api/employee", emp,{headers:header});
+    return this.http.post(this.global.baseUrl + "api/employee", emp, { headers: header });
   }
   update(emp: EmployeeDetail) {
     var token = sessionStorage.getItem("token");
     var header = new HttpHeaders({
       "Authorization": "Bearer " + token
     })
-    return this.http.patch(this.global.baseUrl + "api/employee", emp,{headers:header});
+    return this.http.patch(this.global.baseUrl + "api/employee", emp, { headers: header });
   }
-  delete(id: any) {
-    return this.http.delete(this.global.baseUrl + "api/employee/" + id);
+  delete(empId: any) {
+    var token = sessionStorage.getItem("token");
+    var header = new HttpHeaders({
+      "Authorization": "Bearer " + token
+    })
+    return this.http.delete(this.global.baseUrl + "api/employee/" + empId, {headers : header});
   }
 }

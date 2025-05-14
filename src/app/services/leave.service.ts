@@ -18,31 +18,31 @@ export class LeaveService {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + token,
     });
-    return this.http.post(this.global.baseUrl, leave, { headers: headers });
+    return this.http.post(this.global.baseUrl + "api/leave/", leave, { headers: headers });
   }
   getStat(): Observable<any> {
     const token = sessionStorage.getItem("token");
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + token,
     });
-    return this.http.get(this.global.baseUrl + "stats", { headers: headers });
+    return this.http.get(this.global.baseUrl + "api/leave/stats", { headers: headers });
   }
   getmyLeaves(): Observable<any> {
     const token = sessionStorage.getItem("token");
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + token,
     });
-    return this.http.get(this.global.baseUrl + "User/" + this.global.token.userId.toString(), { headers: headers });
+    return this.http.get(this.global.baseUrl + "api/leave/User/" + this.global.token.userId.toString(), { headers: headers });
   }
   getLeaveRequests(): Observable<any> {
     const token = sessionStorage.getItem("token");
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + token,
     });
-    return this.http.get(this.global.baseUrl + "requests", { headers: headers });
+    return this.http.get(this.global.baseUrl + "api/leave/requests", { headers: headers });
   }
   getLeaveTypes(): Observable<any> {
-    return this.http.get(this.global.baseUrl + "GetReason")
+    return this.http.get(this.global.baseUrl + "api/leave/GetReason")
   }
   updateStatus(reqModel: ChangeLeaveStatus): Observable<any> {
     const token = sessionStorage.getItem("token");
@@ -52,7 +52,7 @@ export class LeaveService {
     });
     
 
-    return this.http.post(`${this.global.baseUrl}status/`, reqModel, { headers });
+    return this.http.post(`${this.global.baseUrl}api/leave/status/`, reqModel, { headers });
   }
 
 

@@ -182,6 +182,7 @@ export class CompanyEmployeeUpsertComponent implements OnInit {
 
     // For Education
     this.userEducationForm = this.fb.group({
+      educationId:[0],
       degreeName: [''],
       instName: [''],
       passingYear: [''],
@@ -292,6 +293,7 @@ export class CompanyEmployeeUpsertComponent implements OnInit {
       employee.userAddress.forEach(address => {
         const addressForm = this.createAddressForm(address.userAddressId);
         addressForm.patchValue({
+          addressId:address.userAddressId,
           addressLine1: address.addressLine1,
           addressLine2: address.addressLine2,
           city: address.city,
@@ -315,6 +317,7 @@ export class CompanyEmployeeUpsertComponent implements OnInit {
       employee.userEducation.forEach(education => {
         const educationForm = this.createEducationForm(education.educationId);
         educationForm.patchValue({
+          educationId: education.educationId,
           degreeName: education.degreeName,
           instName: education.instName,
           passingYear: education.passingYear ? new Date(education.passingYear) : null,
@@ -328,7 +331,7 @@ export class CompanyEmployeeUpsertComponent implements OnInit {
   }
 
   private fetchEmployeeData(employeeId: number): void {
-    this.employeeService.getById(employeeId).subscribe({
+    this.employeeService.getByEmpId(employeeId).subscribe({
       next: (employee: EmployeeModel) => {
         this.populateForms(employee);
       },
@@ -351,6 +354,7 @@ export class CompanyEmployeeUpsertComponent implements OnInit {
   // Address Form Methods
   createAddressForm(addressId: number): FormGroup {
     return this.fb.group({
+      addressId:[0],
       userAddressId: [addressId],
       addressLine1: [''],
       addressLine2: [''],
@@ -582,6 +586,40 @@ export class CompanyEmployeeUpsertComponent implements OnInit {
     })
   }
 
+
+  public deleteAddr(addressId:number){
+    debugger
+    this.empAddressService.delete(addressId).subscribe((res:any)=>{
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Success',
+        detail: "Address record Deleted"
+      });
+    },(error)=>{
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: "Something went wrong!!"
+      });
+    })
+  }
+
+  public deleteEdu(EduId:number){
+    debugger
+    this.empEducationService.delete(EduId).subscribe((res:any)=>{
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Success',
+        detail: "Education record Deleted"
+      });
+    },(error)=>{
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: "Something went wrong!!"
+      });
+    })
+  }
 
 
 }

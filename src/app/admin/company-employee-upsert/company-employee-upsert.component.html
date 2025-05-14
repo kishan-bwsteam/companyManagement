@@ -222,7 +222,7 @@
               <div class="d-flex justify-content-between mb-2">
                 <h5>Address {{i + 1}}</h5>
                 <button type="button" pButton icon="pi pi-times" class="p-button-rounded p-button-danger p-button-text"
-                  (click)="removeAddress(i)" *ngIf="addressForms.length > 1"></button>
+                  (click)="deleteAddr(addressForm.get('addressId')?.value)" *ngIf="addressForms.length > 1"></button>
               </div>
 
               <div class="form-row" [formGroup]="addressForm">
@@ -309,7 +309,7 @@
               <div class="d-flex justify-content-between mb-2">
                 <h5>Education {{i + 1}}</h5>
                 <button type="button" pButton icon="pi pi-times" class="p-button-rounded p-button-danger p-button-text"
-                  (click)="removeEducation(i)" *ngIf="educationForms.length > 1"></button>
+                  (click)="deleteEdu(this.educationForms[i].get('educationId')?.value)" *ngIf="educationForms.length > 1"></button>
               </div>
 
               <div class="form-row" [formGroup]="educationForm">

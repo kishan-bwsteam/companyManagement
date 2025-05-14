@@ -1,0 +1,48 @@
+<div class="container-fluid mt-4">
+  <div class="row">
+    <div class="col-5">
+      <h2 class="text-dark">Role </h2>
+    </div>
+    <div class="col-7 justify-content-end d-flex Empdt btn">
+      <a class="btn btn-primary" [routerLink]="['/roleTable',0]">
+        <i class="fa fa-plus-square"></i> Add
+      </a>
+    </div>
+  </div>
+</div>
+<br/>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <table id="customers" class="table table-bordered table-striped table-hover">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Level</th>
+            <th>Abbreviation</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let role of RoleList">
+            <td>{{role.roleName}}</td>
+            <td>{{role.roleLevel}}</td>
+            <td>{{role.abbreviation}}</td>
+              <td>
+              <span>
+                <a class="btn btn-info" [routerLink]="['/roleTable',role.roleID]">
+                  <i class="fa fa-edit"></i>
+                </a>
+              </span> 
+              <span>
+                <a class="btn btn-danger mx-2" (click)="DeleteRole(role.roleID)">
+                  <i class="fa fa-trash"></i>
+                </a>
+              </span>
+            </td>  
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

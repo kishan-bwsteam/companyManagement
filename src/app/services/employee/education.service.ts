@@ -28,7 +28,7 @@ export class EducationService {
         })
       return this.http.post(this.global.baseUrl + "api/Education", edu,{headers:header});
     }
-    // delete(id:any){
-    //   return this.http.delete(this.global.baseUrl + "api/Department/" + id);
-    // }
+  delete(id:any){
+    return this.http.delete(this.global.baseUrl + "api/Education/" + id);
+  }
 }

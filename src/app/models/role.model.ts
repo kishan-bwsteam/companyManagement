@@ -1,4 +1,5 @@
-export default interface Role {
-    id: number,
-    name: string
-}
+export class Role {
+    RoleName: string = '';
+    RoleLevel: string = '';
+    Abberivation: string = '';
+  }

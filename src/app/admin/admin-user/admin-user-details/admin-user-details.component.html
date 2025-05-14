@@ -1,0 +1,36 @@
+<div class="container my-4">
+    <div class="row my-4 ">
+        <h2 class="col-8">User List</h2>
+        <div class="ml-auto col-4">
+            <a class="btn btn-info form-control" routerLink="0"><i class="fa fa-plus"></i>&nbsp;
+                Add</a>
+        </div>
+    </div>
+    <p-table [value]="UserList" [paginator]="true" [rows]="rows" [totalRecords]="totalRecords" [lazy]="true"
+        (onPage)="onPageChange($event)" [loading]="loading" showGridlines [tableStyle]="{ 'min-width': '50rem' }">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Id</th>
+                <th>User Name</th>
+                <th>Name</th>
+                <th>isActive</th>
+                <th>Actions</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-admin>
+            <tr>
+                <td>{{ admin.userID }}</td>
+                <td>{{ admin.userName }}</td>
+                <td>{{ admin.firstName }} {{ admin.middleName }} {{ admin.lastName }}</td>
+                <td>{{ admin.isActive }}</td>
+                <td>
+                    <div class="row" style="justify-content: center;">
+                        <a class="btn btn-primary" [routerLink]="[admin.userID]"><i class="fa fa-edit"></i></a>
+                        <button class="btn btn-danger" (click)="deleteUser(admin.userId)"><i
+                                class="fa fa-trash-alt"></i></button>
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

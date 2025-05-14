@@ -16,6 +16,10 @@ import { DepartmentUpsertComponent } from './company/department-upsert/departmen
 import { PositionUpsertComponent } from './company/position-upsert/position-upsert.component';
 import { CompanyUpsertComponent } from './admin/company-upsert/company-upsert.component';
 import { CompanyEmployeeUpsertComponent } from './admin/company-employee-upsert/company-employee-upsert.component';
+import { RoleDetailComponent } from './admin/role/role-detail/role-detail.component';
+import { RoleComponent } from './admin/role/role.component';
+import { AdminUserComponent } from './admin/admin-user/admin-user.component';
+import { AdminUserDetailsComponent } from './admin/admin-user/admin-user-details/admin-user-details.component';
 export const routes: Routes = [
     {
         path: "createAdmin/:id",
@@ -44,6 +48,15 @@ export const routes: Routes = [
         path: 'companyTable',
         component: CompanyTableComponent,
         canActivate: [AuthGuardService],
+    }, {
+        path: 'roleTable',
+        component: RoleDetailComponent,
+        canActivate: [AuthGuardService],
+    },
+    {
+        path: 'roleTable/:roleId',
+        component: RoleComponent,
+        canActivate: [AuthGuardService],
     },
     {
         path: 'companyTable/:id',
@@ -55,6 +68,15 @@ export const routes: Routes = [
         component: CompanyComponent,
         canActivate: [AuthGuardService],
         children: [
+            {
+                path: 'adminUserTable',
+                component: AdminUserDetailsComponent,
+                canActivate: [AuthGuardService],
+            }, {
+                path: 'adminUserTable/:userId',
+                component: AdminUserComponent,
+                canActivate: [AuthGuardService],
+            },
             {
                 path: "employeeTable",
                 component: CompanyEmployeeTableComponent,
@@ -71,19 +93,19 @@ export const routes: Routes = [
                 component: DepartmentTableComponent,
                 canActivate: [AuthGuardService],
             },
-            
+
             {
                 path: 'positionTable',
                 component: PositionTableComponent,
                 canActivate: [AuthGuardService],
             },
-            
+
             {
                 path: 'departmentTable/:depId',
                 component: DepartmentUpsertComponent,
                 canActivate: [AuthGuardService],
             },
-            
+
             {
                 path: 'positionTable/:posId',
                 component: PositionUpsertComponent,

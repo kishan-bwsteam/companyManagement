@@ -24,7 +24,7 @@ export class GlobalService {
   defualtImageUrl = "https://img.freepik.com/premium-vector/avatar-profile-icon-flat-style-male-user-profile-vector-illustration-isolated-background-man-profile-sign-business-concept_157943-38764.jpg?semt=ais_hybrid";
   imgUrl: string = "";
   drawerVisible = false;
-  baseUrl = "http://192.168.1.4:5102/";
+  baseUrl = "http://localhost:5000/";
   Roles: any[] = [];
   Departments: Department[] = [];
   constructor(private router: Router, private http: HttpClient) { 

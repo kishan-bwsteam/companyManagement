@@ -24,7 +24,7 @@ export class AddressService {
     })
     return this.http.post(this.global.baseUrl + "api/Address", addr, { headers: header });
   }
-  // delete(id:any){
-  //   return this.http.delete(this.global.baseUrl + "api/Department/" + id);
-  // }
+  delete(id:any){
+    return this.http.delete(this.global.baseUrl + "api/Address/" + id);
+  }
 }

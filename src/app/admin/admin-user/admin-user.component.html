@@ -1,0 +1,118 @@
+<div class="container mt-5">
+  <form [formGroup]="adminUserForm" (ngSubmit)="onSubmit()" class="needs-validation" novalidate>
+    <h2 class="mb-4">Admin User Information</h2>
+
+    <!-- Basic Information -->
+    <div class="mb-4">
+      <h4 class="mb-3">Basic Information</h4>
+      <div class="row g-3">
+        <div class="col-md-4">
+          <label for="firstName" class="form-label">First Name*</label>
+          <input type="text" class="form-control" id="firstName" formControlName="firstName" placeholder="Enter first name" />
+          <div *ngIf="adminUserForm.get('firstName')?.invalid && adminUserForm.get('firstName')?.touched" class="invalid-feedback d-block">
+            First name is required
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <label for="middleName" class="form-label">Middle Name</label>
+          <input type="text" class="form-control" id="middleName" formControlName="middleName" placeholder="Enter middle name" />
+        </div>
+
+        <div class="col-md-4">
+          <label for="lastName" class="form-label">Last Name*</label>
+          <input type="text" class="form-control" id="lastName" formControlName="lastName" placeholder="Enter last name" />
+          <div *ngIf="adminUserForm.get('lastName')?.invalid && adminUserForm.get('lastName')?.touched" class="invalid-feedback d-block">
+            Last name is required
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <label for="userName" class="form-label">Username*</label>
+          <input type="text" class="form-control" id="userName" formControlName="userName" placeholder="Enter username" />
+          <div *ngIf="adminUserForm.get('userName')?.invalid && adminUserForm.get('userName')?.touched" class="invalid-feedback d-block">
+            Username is required
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <label for="emailId" class="form-label">Email*</label>
+          <input type="email" class="form-control" id="emailId" formControlName="emailId" placeholder="Enter email" />
+          <div *ngIf="adminUserForm.get('emailId')?.invalid && adminUserForm.get('emailId')?.touched" class="invalid-feedback d-block">
+            Valid email is required
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <label for="phoneNumber" class="form-label">Phone Number*</label>
+          <input type="text" class="form-control" id="phoneNumber" formControlName="phoneNumber" placeholder="Enter phone number" />
+          <div *ngIf="adminUserForm.get('phoneNumber')?.invalid && adminUserForm.get('phoneNumber')?.touched" class="invalid-feedback d-block">
+            Phone number is required
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <label for="dob" class="form-label">Date of Birth*</label>
+          <input type="date" id="dob" formControlName="dob" class="form-control" />
+          <div *ngIf="adminUserForm.get('dob')?.invalid && adminUserForm.get('dob')?.touched" class="invalid-feedback d-block">
+            Date of birth is required
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Address Information -->
+    <div class="mb-4">
+      <h4 class="mb-3">Address Information</h4>
+
+      <div [formGroupName]="'address'" class="row g-3">
+
+        <div class="col-md-8">
+          <label class="form-label" for="addressLine1">Address Line 1*</label>
+          <input type="text" class="form-control" formControlName="addressLine1" placeholder="Enter address line 1" />
+          <div *ngIf="adminUserForm.get('address.addressLine1')?.invalid && adminUserForm.get('address.addressLine1')?.touched" class="invalid-feedback d-block">
+            Address line 1 is required
+          </div>
+        </div>
+
+        <div class="col-md-8">
+          <label class="form-label" for="addressLine2">Address Line 2</label>
+          <input type="text" class="form-control" formControlName="addressLine2" placeholder="Enter address line 2" />
+        </div>
+
+        <div class="col-md-4">
+          <label class="form-label" for="city">City*</label>
+          <input type="text" class="form-control" formControlName="city" placeholder="Enter city" />
+          <div *ngIf="adminUserForm.get('address.city')?.invalid && adminUserForm.get('address.city')?.touched" class="invalid-feedback d-block">
+            City is required
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <label class="form-label" for="countryId">Country*</label>
+          <p-select inputId="countryId" formControlName="countryId" [options]="countryList" optionLabel="countryName" optionValue="countryId" placeholder="Select country" (onChange)="onCountryChange($event.value)" class="w-100"></p-select>
+        </div>
+
+        <div class="col-md-4">
+          <label class="form-label" for="stateId">State*</label>
+          <p-select inputId="stateId" formControlName="stateId" [options]="stateList" optionLabel="stateName" optionValue="stateId" placeholder="Select state" class="w-100"></p-select>
+        </div>
+
+        <div class="col-md-4">
+          <label class="form-label" for="zipCode">Zip Code*</label>
+          <input type="text" class="form-control" formControlName="zipCode" placeholder="Enter zip code" />
+          <div *ngIf="adminUserForm.get('address.zipCode')?.invalid && adminUserForm.get('address.zipCode')?.touched" class="invalid-feedback d-block">
+            Zip code is required
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="text-end">
+      <button pButton type="submit" label="Save" [disabled]="adminUserForm.invalid" class="btn btn-primary"></button>
+    </div>
+  </form>
+</div>
+
+<p-toast></p-toast>

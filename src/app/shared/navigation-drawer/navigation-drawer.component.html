@@ -73,12 +73,16 @@
       </ng-container>
 
       <ng-container *ngIf="this.global.isAdmin() && this.router.url.includes('company/')">
-        
+
+        <a (click)="navigateCompanyChild('adminUserTable')">
+          <div class="nav-button"><i class="fa-solid fa-user"></i><span
+              [class.displayNone]="!this.global.drawerVisible">User</span></div>
+        </a>
         <a (click)="navigateCompanyChild('departmentTable')">
           <div class="nav-button"><i class="fa-solid fa-building"></i><span
               [class.displayNone]="!this.global.drawerVisible">Department</span></div>
         </a>
-        
+
         <a (click)="navigateCompanyChild('positionTable')">
           <div class="nav-button"><i class="fa-solid fa-chart-simple"></i><span
               [class.displayNone]="!this.global.drawerVisible">Postion</span></div>
@@ -91,12 +95,10 @@
       </ng-container>
 
       <ng-container *ngIf="this.global.isAdmin() && !this.router.url.includes('company/')">
-        <a>
-          <div class="nav-button"><i class="fa-solid fa-user"></i><span
-              [class.displayNone]="!this.global.drawerVisible">User</span></div>
+        <a routerLink="roleTable">
+          <div class="nav-button"><i class="fa-solid fa-chart-simple"></i><span
+              [class.displayNone]="!this.global.drawerVisible">Role</span></div>
         </a>
-        <div class="nav-button"><i class="fa-solid fa-chart-simple"></i><span
-            [class.displayNone]="!this.global.drawerVisible">Role</span></div>
         <a routerLink="companyTable">
           <div class="nav-button"><i class="fa-solid fa-city"></i><span
               [class.displayNone]="!this.global.drawerVisible">Company</span></div>

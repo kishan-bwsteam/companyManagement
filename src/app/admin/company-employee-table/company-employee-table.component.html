@@ -1,3 +1,4 @@
+<p-toast></p-toast>
 <div class="container my-4">
     <div class="row my-4 ">
         <h2 class="col-8">Employee List</h2>
@@ -27,7 +28,7 @@
                             style="width: fit-content; min-width: fit-content; border-radius: 100px;"><i
                                 class="fa-solid fa-edit"></i></a>
                         <button class="btn btn-outline-danger"
-                            style="width: fit-content; min-width: fit-content; border-radius: 100px;"><i
+                            style="width: fit-content; min-width: fit-content; border-radius: 100px;" (click)="deleteEmp(emp.employeeID)"><i
                                 class="fa-solid fa-trash-alt"></i></button>
                     </div>
                 </td>

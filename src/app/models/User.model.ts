@@ -17,6 +17,9 @@ export interface EmployeeModel extends EmployeeDetail{
     userEducation: UserEducation[];
     userBankDetail: UserBankDetail;
 }
+export interface AdminUser extends UserBasic, UserAddress{
+    emailID:string
+}
 export interface EmployeeDetail{
     empId?: number;
     userID?: number;
@@ -30,6 +33,7 @@ export interface EmployeeDetail{
     roleId: number;
     emailID: string;
 }
+
 export interface UserBasic {
     userID: number;
     userGuid: string;
@@ -54,11 +58,14 @@ export interface UserAddress {
     userAddressId: number;
     userID: number;
     addressTypeID: number;
+    userAddressTypeName?: string;
     addressLine1: string;
     addressLine2: string;
     city: string;
     stateId: number;
+    stateName?:string;
     countryId: number;
+    countryName?:string;
     zipCode: string;
 }
 

@@ -1,0 +1,49 @@
+
+
+<div class="container-fluid p-2">
+  <p-toast></p-toast>
+  <div>
+    <h2 class="heading"> Roles </h2>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <form [formGroup]="rolesform" (ngSubmit)="OnSubmit()">
+          <div class="form-group">
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label class="inputLabel"><strong>Role Name </strong> <span>*</span></label>
+                  <input type="text" formControlName="RoleName" placeholder="Role Name" class="form-control LH" />
+                  <div *ngIf="submitted && f.RoleName.errors" class="text-danger">
+                    <div *ngIf="f.RoleName.errors.required">Role Name</div>
+                  </div>
+                </div>
+              </div>
+              <div class="ui-grid-col-12 col-sm-4">
+                <div class="form-group">
+                  <label class="inputLabel"><strong>Role Level </strong> <span>*</span></label>
+                  <input type="number" value="5" formControlName="RoleLevel" placeholder="Role Level" class="form-control LH" />
+                  <div *ngIf="submitted && f.RoleLevel.errors" class="text-danger">
+                    <div *ngIf="f.RoleLevel.errors.required">Role Level is required</div>
+                  </div>
+                </div>
+              </div>
+              <div class="ui-grid-col-12 col-sm-4">
+                <div class="form-group">
+                  <label class="inputLabel"><strong>Abbreviation </strong> <span>*</span></label>
+                  <input type="text" formControlName="Abbreviation" placeholder="Abbreviation" class="form-control LH" />
+                  <div *ngIf="submitted && f.Abbreviation.errors" class="text-danger">
+                    <div *ngIf="f.Abbreviation.errors.required">Abbreviation is required</div>
+                  </div>
+                </div>
+              </div>
+            </div> 
+          </div>
+          <div class="ui-grid-col-3">
+            <button type="submit" class="btn btn-primary">{{editmode? 'Update':'Create' }}  </button>        
+            <a class="btn btn-success mx-2" [routerLink]="['/roleDetails']" onclick="history.back()">Back</a>
+          </div>
+      </form>
+    </div>
+  </div>
+</div>
