@@ -1,31 +1,35 @@
-<p-table [value]="adminlist" 
-         [paginator]="true" 
-         [rows]="rows" 
-         [totalRecords]="totalRecords"
-         [lazy]="true" 
-         (onPage)="onPageChange($event)"
-         [loading]="loading"
-         showGridlines 
-         [tableStyle]="{ 'min-width': '50rem' }">
+<p-table [value]="adminlist" selectionMode="single" [paginator]="true" [rows]="rows" [totalRecords]="totalRecords" [lazy]="true"
+    (onPage)="onPageChange($event)" [loading]="loading" showGridlines [tableStyle]="{ 'min-width': '50rem' }">
+    <ng-template #caption>
+        <div class="flex">
+            <p-iconfield iconPosition="left" class="ml-auto">
+                <p-inputicon>
+                    <i class="pi pi-search"></i>
+                </p-inputicon>
+                <input pInputText type="text" (input)="search($event)"
+                    placeholder="        Search keyword" />
+            </p-iconfield>
+        </div>
+    </ng-template>
     <ng-template pTemplate="header">
         <tr>
-            <th>Id</th>
+            <th>Index</th>
             <th>User Name</th>
             <th>Name</th>
             <th>isActive</th>
             <th>Actions</th>
         </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-admin>
+    <ng-template pTemplate="body" let-admin let-i="rowIndex">
         <tr>
-            <td>{{ admin.userID }}</td>
+            <td>{{ i+1 }}</td>
             <td>{{ admin.userName }}</td>
             <td>{{ admin.firstName }} {{ admin.middleName }} {{ admin.lastName }}</td>
             <td>{{ admin.isActive }}</td>
             <td>
                 <div class="row" style="justify-content: center;">
                     <a class="btn btn-primary" routerLink="/createAdmin/{{admin.userID}}"><i class="fa fa-edit"></i></a>
-                    <button class="btn btn-danger"><i class="fa fa-trash-alt"></i></button>
+                    <button class="btn btn-danger mx-2"><i class="fa fa-trash-alt"></i></button>
                 </div>
             </td>
         </tr>

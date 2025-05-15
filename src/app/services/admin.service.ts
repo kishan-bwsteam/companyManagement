@@ -14,15 +14,20 @@ export class AdminService {
 
   }
 
-  getAdmins(limit: number, startingRow: number):Observable<PaginatedResult<UserBasic>> {
+  getAdmins(limit: number, startingRow: number, search?: string): Observable<PaginatedResult<UserBasic>> {
+   
+
     const token = sessionStorage.getItem("token");
     const headers = new HttpHeaders({
       "Authorization": "Bearer " + token
     });
 
-    const params = new HttpParams()
+    let params = new HttpParams()
       .set('limit', limit.toString())
       .set('startingRow', startingRow.toString());
+    if (search !== undefined) {
+      params = params.set('search',search);
+    }
 
     return this.http.get<PaginatedResult<UserBasic>>(this.global.baseUrl + "api/admin/", { headers, params });
   }

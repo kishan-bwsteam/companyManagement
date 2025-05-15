@@ -4,9 +4,11 @@ import { TableModule } from 'primeng/table';
 import { RouterLink } from '@angular/router';
 import { PaginatedResult } from '../../models/paginatedResult.modal';
 import { UserBasic } from '../../models/User.model';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
 
 @Component({
-  imports: [TableModule, RouterLink],
+  imports: [TableModule, RouterLink, IconFieldModule, InputIconModule],
   selector: 'app-admin-table',
   templateUrl: './admin-table.component.html',
   styleUrls: ['./admin-table.component.css']
@@ -40,9 +42,23 @@ export class AdminTableComponent implements OnInit {
   }
 
   onPageChange(event: any): void {
-    debugger
     this.startingRow = event.first;
     this.rows = event.rows;
     this.loadAdmins();
+  }
+
+  search(query:any){
+    let val: string = query.target.value;
+    if(val.length < 1){
+      return;
+    }
+    this.adminService.getAdmins(this.rows,this.startingRow,val).subscribe(
+      (res: PaginatedResult<UserBasic>)=>{
+        this.adminlist = res.data;
+        this.totalRecords = res.totalRecords;
+      },(err)=>{
+        console.log(err);  
+      }
+    )
   }
 }
