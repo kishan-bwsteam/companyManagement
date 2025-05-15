@@ -74,6 +74,7 @@ export class CreateAdminComponent implements OnInit {
     City: new FormControl("", Validators.required),
     State: new FormControl("", Validators.required),
     Zipcode: new FormControl("", Validators.required),
+    UserName: new FormControl("", Validators.required)
   })
   companyObjects: any[] = [];
   companyForm = new FormGroup({
@@ -151,7 +152,6 @@ export class CreateAdminComponent implements OnInit {
 
   submit() {
     const franchise = this.personalForm.getRawValue();
-    console.log(franchise);
     const param = {
       ManageFranchise: franchise,
       Companys: this.companyObjects
