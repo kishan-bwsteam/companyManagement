@@ -17,6 +17,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { Ripple } from 'primeng/ripple';
 import { GlobalService } from '../../services/global.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-create-admin',
@@ -32,7 +33,8 @@ import { GlobalService } from '../../services/global.service';
     ButtonModule,
     FormsModule,
     Toast,
-    DatePickerModule],
+    DatePickerModule,
+    CommonModule],
   templateUrl: './create-admin.component.html',
   styleUrl: './create-admin.component.css',
   providers: [MessageService]
@@ -78,16 +80,17 @@ export class CreateAdminComponent implements OnInit {
   })
   companyObjects: any[] = [];
   companyForm = new FormGroup({
-    CompanyName: new FormControl("", Validators.required),
-    CAddress2: new FormControl("", Validators.required),
-    CAddress3: new FormControl(""),
-    CCity: new FormControl("", Validators.required),
-    CState: new FormControl("", Validators.required),
-    CCountry: new FormControl("", Validators.required),
-    CZipcode: new FormControl("", Validators.required),
-    GSTIN: new FormControl(""),
-    CIN: new FormControl(""),
-  })
+  CompanyName: new FormControl("", Validators.required),
+  AddressLine1: new FormControl("", Validators.required),
+  AddressLine2: new FormControl(""),
+  City: new FormControl("", Validators.required),
+  StateId: new FormControl("", Validators.required),
+  CountryId: new FormControl("", Validators.required),
+  ZipCode: new FormControl("", Validators.required),
+  GSTIN: new FormControl(""),
+  CIN: new FormControl(""),
+})
+
   isAllFormValid() {
     return this.companyObjects.length > 0
   }
@@ -126,16 +129,16 @@ export class CreateAdminComponent implements OnInit {
       var ob = this.companyObjects.find(ob => ob.CompanyName == companyName);
       this.companyObjects.splice(index, 1);
 
-      this.companyForm.setValue({
+      this.companyForm.patchValue({
         CompanyName: ob.CompanyName,
         GSTIN: ob.GSTIN,
         CIN: ob.CIN,
-        CAddress2: ob.CAddress2,
-        CAddress3: ob.CAddress3,
-        CCountry: ob.CCountry,
-        CState: ob.CState,
-        CCity: ob.CCity,
-        CZipcode: ob.CZipcode
+        AddressLine1: ob.AddressLine1,
+        AddressLine2: ob.AddressLine2,
+        CountryId: ob.CountryId,
+        StateId: ob.StateId,
+        City: ob.City,
+        ZipCode: ob.ZipCode
       })
     }
   }
@@ -150,22 +153,76 @@ export class CreateAdminComponent implements OnInit {
     this.companyForm.reset();
   }
 
-  submit() {
-    const franchise = this.personalForm.getRawValue();
-    const param = {
-      ManageFranchise: franchise,
-      Companys: this.companyObjects
-    }
-    this.http.post(this.global.baseUrl + "api/admin", param).subscribe((res: any) => {
+  // submit() {
+  //   const franchise = this.personalForm.getRawValue();
+  //   const param = {
+  //     ManageFranchise: franchise,
+  //     Companys: this.companyObjects
+  //   }
+  //   this.http.post(this.global.baseUrl + "api/admin", param).subscribe((res: any) => {
 
-      if (res.status == 200) {
-        this.messageService.add({ severity: 'success', summary: "Success", detail: res.message });
-        this.router.navigate([""]);
-      } else {
-        this.messageService.add({ severity: 'error', summary: "Error", detail: res.message });
-      }
-    }, (error) => {
-      this.messageService.add({ severity: 'error', summary: "Error", detail: 'Something went wrong!!' });
-    })
+  //     if (res.status == 200) {
+  //       this.messageService.add({ severity: 'success', summary: "Success", detail: res.message });
+  //       this.router.navigate([""]);
+  //     } else {
+  //       this.messageService.add({ severity: 'error', summary: "Error", detail: res.message });
+  //     }
+  //   }, (error) => {
+  //     this.messageService.add({ severity: 'error', summary: "Error", detail: 'Something went wrong!!' });
+  //   })
+  // }
+
+  submit() {
+  if (!this.personalForm.valid || this.companyObjects.length === 0) {
+    this.messageService.add({
+      severity: 'warn',
+      summary: 'Validation Error',
+      detail: 'Please complete all required fields and add at least one company.'
+    });
+    return;
   }
+
+  const franchise = this.personalForm.getRawValue();
+  const param = {
+    ManageFranchise: franchise,
+    Companys: this.companyObjects
+  };
+
+  const headers = {
+    headers: {
+      Authorization: `Bearer ${sessionStorage.getItem('token')}`
+    }
+  };
+
+  console.log("Submitting data:", param);
+
+  this.http.post(this.global.baseUrl + "api/admin", param, headers).subscribe({
+    next: (res: any) => {
+      console.log("Server Response:", res);
+      if (res?.status === 200 || res?.message?.toLowerCase() === 'success') {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: res.message || 'User created successfully!'
+        });
+        this.router.navigate(["/"]); // Or your desired route
+      } else {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: res.message || 'Unexpected response from server'
+        });
+      }
+    },
+    error: (error) => {
+      console.error("Error from server:", error);
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Submission Failed',
+        detail: error?.error?.message || 'Something went wrong. Please try again later.'
+      });
+    }
+  });
+}
+
 }

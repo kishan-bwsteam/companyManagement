@@ -42,11 +42,7 @@ export class CompanyTableComponent implements OnInit {
 
     })
   }
-
-
-
-
-
+  
   confirmDelete(companyId: number): void {
     this.confirmationService.confirm({
       message: 'Are you sure you want to delete this Company?',
