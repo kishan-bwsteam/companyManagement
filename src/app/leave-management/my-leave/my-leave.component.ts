@@ -58,7 +58,7 @@ export class MyLeaveComponent implements OnInit{
   }
   getMyLeaves() {
     this.leaveService.getmyLeaves().subscribe((res: any) => {
-      this.leaves = res;
+      // this.leaves = res;
       if (res.status == 200){
         this.leaves = res.leaveViewModel;
       }

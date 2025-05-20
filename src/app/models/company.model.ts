@@ -1,8 +1,8 @@
 export interface Company {
-    companyId: number;
-    loginUserID: number;
-    userID: number;
-    companyGuid: string;
+    companyId?: number;
+    loginUserID?: number;
+    userID?: number;
+    companyGuid?: string;
     franchiseID?: number; // Nullable in C#
     companyName: string;
     addressLine1: string;

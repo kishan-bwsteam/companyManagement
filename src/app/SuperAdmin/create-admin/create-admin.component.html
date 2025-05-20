@@ -1,11 +1,9 @@
 <p-toast />
-<!-- <p-progressbar mode="indeterminate" [style]="{ height: '6px' }" color="#343a40" /> -->
 <div class="container my-4">
     <p-stepper [value]="1" class="basis-[50rem]">
         <p-step-list>
             <p-step [value]="1">Personal Details</p-step>
             <p-step [value]="2">Company</p-step>
-            <p-step [value]="3">Submit</p-step>
         </p-step-list>
         <p-step-panels>
             <p-step-panel [value]="1">
@@ -17,81 +15,73 @@
 
                                 <div class="flex flex-col gap-2 col-4" style="display: flex; flex-direction: column; ">
                                     <label for="FirstName">First Name *</label>
-                                    <input formControlName="FirstName" pInputText id="username" />
-                                    <small id="username-error"></small>
+                                    <input formControlName="FirstName" pInputText id="FirstName" />
+                                    <small *ngIf="personalForm.get('FirstName')?.invalid && personalForm.get('FirstName')?.touched" class="p-error">First Name is required</small>
                                 </div>
                                 <div class="flex flex-col gap-2 col-4" style="display: flex; flex-direction: column;">
-                                    <label for="LastName">Middle Name</label>
-                                    <input formControlName="LastName" pInputText id="username"
-                                        aria-describedby="username-help" />
-                                    <small id="username-help"></small>
+                                    <label for="MiddleName">Middle Name</label>
+                                    <input formControlName="MiddleName" pInputText id="MiddleName" />
                                 </div>
                                 <div class="flex flex-col gap-2 col-4" style="display: flex; flex-direction: column;">
-                                    <label for="MiddleName">Last Name</label>
-                                    <input formControlName="MiddleName" pInputText id="username"
-                                        aria-describedby="username-help" />
-                                    <small id="username-help"></small>
+                                    <label for="LastName">Last Name</label>
+                                    <input formControlName="LastName" pInputText id="LastName" />
                                 </div>
                             </div>
-                            <div style="display: flex; flex-direction: row; justify-content: space-between;"
-                                class="my-4">
+                            <div style="display: flex; flex-direction: row; justify-content: space-between;" class="my-4">
 
                                 <div class="flex flex-col gap-2 col-4" style="display: flex; flex-direction: column;">
                                     <label for="EmailID">Email *</label>
-                                    <input formControlName="EmailID" pInputText id="username"
-                                        aria-describedby="username-help" />
-                                    <small id="username-help"></small>
+                                    <input formControlName="EmailID" pInputText id="EmailID" />
+                                    <small *ngIf="personalForm.get('EmailID')?.invalid && personalForm.get('EmailID')?.touched" class="p-error">
+                                        <span *ngIf="personalForm.get('EmailID')?.errors?.['required']">Email is required</span>
+                                        <span *ngIf="personalForm.get('EmailID')?.errors?.['email']">Invalid email format</span>
+                                    </small>
                                 </div>
                                 <div class="flex flex-col gap-2 col-4" style="display: flex; flex-direction: column;">
                                     <label for="AddressLine1">Address 1 *</label>
-                                    <input formControlName="AddressLine1" pInputText id="username"
-                                        aria-describedby="username-help" />
-                                    <small id="username-help"></small>
+                                    <input formControlName="AddressLine1" pInputText id="AddressLine1" />
+                                    <small *ngIf="personalForm.get('AddressLine1')?.invalid && personalForm.get('AddressLine1')?.touched" class="p-error">Address Line 1 is required</small>
                                 </div>
                                 <div class="flex flex-col gap-2 col-4" style="display: flex; flex-direction: column;">
-                                    <label for="AddressLine2">Address 2 *</label>
-                                    <input formControlName="AddressLine2" pInputText id="username"
-                                        aria-describedby="username-help" />
-                                    <small id="username-help"></small>
+                                    <label for="AddressLine2">Address 2</label>
+                                    <input formControlName="AddressLine2" pInputText id="AddressLine2" />
                                 </div>
-
                             </div>
-                            <div style="display: flex; flex-direction: row; justify-content: space-between;"
-                                class="my-4">
+                            <div style="display: flex; flex-direction: row; justify-content: space-between;" class="my-4">
 
                                 <div class="flex flex-col gap-2 col-4" style="display: flex; flex-direction: column;">
-                                    <label for="Country">Country *</label>
-                                    <p-select [options]="countryList" formControlName="Country" optionValue="countryId"
-                                        optionLabel="countryName" placeholder="Select a Country"
-                                        (onChange)="onCountryChange($event.value)" class="w-full md:w-56" />
-                                    <!-- <input formControlName="countryID" pInputText id="username" aria-describedby="username-help" /> -->
-                                    <small id="username-help"></small>
+
+                                    <label for="CountryId">Country *</label>
+                                    <p-select [options]="countryList" formControlName="CountryId" optionValue="countryId"
+                                        optionLabel="countryName" placeholder="Select a Country" 
+                                        (onChange)="onCountryChange($event.value)"
+                                        [showClear]="true"></p-select>
+                                    <small *ngIf="personalForm.get('CountryId')?.invalid && personalForm.get('CountryId')?.touched" class="p-error">Country is required</small>
                                 </div>
                                 <div class="flex flex-col gap-2 col-4" style="display: flex; flex-direction: column;">
-                                    <label for="State">State *</label>
-                                    <p-select [options]="filteredStates" formControlName="State" optionValue="stateId"
-                                        optionLabel="stateName" placeholder="Select a State" class="w-full md:w-56" />
-                                    <small id="username-help"></small>
+                                    <label for="StateId">State *</label>
+                                    <p-select [options]="filteredStates" formControlName="StateId" optionValue="stateId" 
+                                        optionLabel="stateName" placeholder="Select a State"
+                                        [showClear]="true"></p-select>
+                                    <small *ngIf="personalForm.get('StateId')?.invalid && personalForm.get('StateId')?.touched" class="p-error">State is required</small>
+
                                 </div>
                                 <div class="flex flex-col gap-2 col-4" style="display: flex; flex-direction: column;">
                                     <label for="City">City *</label>
-                                    <input formControlName="City" pInputText id="username"
-                                        aria-describedby="username-help" />
-                                    <small id="username-help"></small>
+                                    <input formControlName="City" pInputText id="City" />
+                                    <small *ngIf="personalForm.get('City')?.invalid && personalForm.get('City')?.touched" class="p-error">City is required</small>
                                 </div>
                             </div>
                             <div style="display: flex; flex-direction: row; justify-content: start;" class="my-4">
                                 <div class="flex flex-col gap-2 col-4" style="display: flex; flex-direction: column;">
                                     <label for="Zipcode">Zip Code *</label>
-                                    <input formControlName="Zipcode" pInputText id="username"
-                                        aria-describedby="username-help" />
-                                    <small id="username-help"></small>
+                                    <input formControlName="Zipcode" pInputText id="Zipcode" />
+                                    <small *ngIf="personalForm.get('Zipcode')?.invalid && personalForm.get('Zipcode')?.touched" class="p-error">Zipcode is required</small>
                                 </div>
                                 <div class="flex flex-col gap-2 col-4" style="display: flex; flex-direction: column;">
-                                    <label for="UserName">UserName *</label>
-                                    <input formControlName="UserName" pInputText id="username"
-                                        aria-describedby="username-help" />
-                                    <small id="username-help"></small>
+                                    <label for="UserName">Username *</label>
+                                    <input formControlName="UserName" pInputText id="UserName" />
+                                    <small *ngIf="personalForm.get('UserName')?.invalid && personalForm.get('UserName')?.touched" class="p-error">Username is required</small>
                                 </div>
                             </div>
                             <div class="d-flex pt-6 justify-content-end">
@@ -107,53 +97,59 @@
             <p-step-panel [value]="2">
                 <ng-template #content let-activateCallback="activateCallback">
 
-                    <form [formGroup]="companyForm" (ngSubmit)="submit()">
+                    <form [formGroup]="companyForm">
                         <div style="display: flex; flex-direction: row; justify-content: space-between;">
                             <div class="flex flex-col gap-2 col-4" style="display: flex; flex-direction: column; ">
-                                <label for="CompanyName">Company Name *</label>
-                                <input formControlName="CompanyName" pInputText id="CompanyName" />
+                                <label for="companyName">Company Name *</label>
+                                <input formControlName="companyName" pInputText id="companyName" />
+                                <small *ngIf="companyForm.get('companyName')?.invalid && companyForm.get('companyName')?.touched" class="p-error">Company Name is required</small>
                             </div>
-                            <div class="flex flex-col gap-2 col-4" style="display: flex; flex-direction: column; ">
-                                <label for="GSTIN">GSTIN</label>
-                                <input formControlName="GSTIN" pInputText id="GSTIN" />
+                            <div class="flex flex-col gap-2 col-4" style="display: flex; flex-direction: column;">
+                                <label for="gstin">GSTIN</label>
+                                <input formControlName="gstin" pInputText id="gstin" />
                             </div>
-                            <div class="flex flex-col gap-2 col-4" style="display: flex; flex-direction: column; ">
-                                <label for="CIN">CIN</label>
-                                <input formControlName="CIN" pInputText id="CIN" />
-                            </div>
-                        </div>
-
-                        <div class="my-4" style="display: flex; flex-direction: row; justify-content: space-between;">
-                            <div class="flex flex-col gap-2 col-4" style="display: flex; flex-direction: column; ">
-                                <label for="AddressLine1">Address 1 *</label>
-                                <input formControlName="AddressLine1" pInputText id="AddressLine1" />
-                            </div>
-                            <div class="flex flex-col gap-2 col-4" style="display: flex; flex-direction: column; ">
-                                <label for="AddressLine2">Address 2</label>
-                                <input formControlName="AddressLine2" pInputText id="AddressLine2" />
-                            </div>
-                            <div class="flex flex-col gap-2 col-4" style="display: flex; flex-direction: column; ">
-                                <label for="CountryId">Country *</label>
-                                <p-select [options]="countryList" formControlName="CountryId" optionValue="countryId"
-                                    optionLabel="countryName" (onChange)="onCountryChange($event.value)"
-                                    placeholder="Select a Country" class="w-full md:w-56"></p-select>
+                            <div class="flex flex-col gap-2 col-4" style="display: flex; flex-direction: column;">
+                                <label for="cin">CIN</label>
+                                <input formControlName="cin" pInputText id="cin" />
                             </div>
                         </div>
-
-                        <div class="my-4" style="display: flex; flex-direction: row; justify-content: space-between;">
-                            <div class="flex flex-col gap-2 col-4" style="display: flex; flex-direction: column; ">
-                                <label for="StateId">State *</label>
-                                <p-select [options]="filteredStates" formControlName="StateId" optionValue="stateId"
+                        <div style="display: flex; flex-direction: row; justify-content: space-between;" class="my-4">
+                            <div class="flex flex-col gap-2 col-4" style="display: flex; flex-direction: column;">
+                                <label for="addressLine1">Address 1 *</label>
+                                <input formControlName="addressLine1" pInputText id="addressLine1" />
+                                <small *ngIf="companyForm.get('addressLine1')?.invalid && companyForm.get('addressLine1')?.touched" class="p-error">Address Line 1 is required</small>
+                            </div>
+                            <div class="flex flex-col gap-2 col-4" style="display: flex; flex-direction: column;">
+                                <label for="addressLine2">Address 2</label>
+                                <input formControlName="addressLine2" pInputText id="addressLine2" />
+                            </div>
+                            <div class="flex flex-col gap-2 col-4" style="display: flex; flex-direction: column;">
+                                <label for="countryId">Country *</label>
+                                <p-select [options]="countryList" formControlName="countryId" optionValue="countryId" 
+                                    optionLabel="countryName" placeholder="Select a Country"
+                                    (onChange)="onCountryChange($event.value)"
+                                    [showClear]="true"></p-select>
+                                <small *ngIf="companyForm.get('countryId')?.invalid && companyForm.get('countryId')?.touched" class="p-error">Country is required</small>
+                            </div>
+                        </div>
+                        <div style="display: flex; flex-direction: row; justify-content: space-between;" class="my-4">
+                            <div class="flex flex-col gap-2 col-4" style="display: flex; flex-direction: column;">
+                                <label for="stateId">State *</label>
+                                <p-select [options]="filteredStates" formControlName="stateId" optionValue="stateId" 
                                     optionLabel="stateName" placeholder="Select a State"
-                                    class="w-full md:w-56"></p-select>
+                                    [showClear]="true"></p-select>
+                                <small *ngIf="companyForm.get('stateId')?.invalid && companyForm.get('stateId')?.touched" class="p-error">State is required</small>
                             </div>
-                            <div class="flex flex-col gap-2 col-4" style="display: flex; flex-direction: column; ">
-                                <label for="City">City *</label>
-                                <input formControlName="City" pInputText id="City" />
+                            <div class="flex flex-col gap-2 col-4" style="display: flex; flex-direction: column;">
+                                <label for="city">City *</label>
+                                <input formControlName="city" pInputText id="city" />
+                                <small *ngIf="companyForm.get('city')?.invalid && companyForm.get('city')?.touched" class="p-error">City is required</small>
                             </div>
-                            <div class="flex flex-col gap-2 col-4" style="display: flex; flex-direction: column; ">
-                                <label for="ZipCode">Zip Code *</label>
-                                <input formControlName="ZipCode" pInputText id="ZipCode" />
+                            <div class="flex flex-col gap-2 col-4" style="display: flex; flex-direction: column;">
+                                <label for="zipCode">Pin Code *</label>
+                                <input formControlName="zipCode" pInputText id="zipCode" />
+                                <small *ngIf="companyForm.get('zipCode')?.invalid && companyForm.get('zipCode')?.touched" class="p-error">Zip Code is required</small>
+
                             </div>
                         </div>
 
@@ -161,15 +157,16 @@
                             <p-button label="Back" severity="secondary" styleClass="px-4"
                                 (onClick)="activateCallback(1)" />
                             <p-button [disabled]="!companyForm.valid" label="Add" icon="pi pi-plus"
-                                (click)="addcompany()" iconPos="right" class="mx-3" />
-                            <p-button type="submit" [disabled]="!isAllFormValid()" label="Submit" icon="pi pi-check"
-                                iconPos="right" />
+
+                                (click)="addcompany()" iconPos="left" class="mx-3" />
+                            <p-button [disabled]="!isAllFormValid()" label="Submit"
+                                icon="pi pi-check" iconPos="left" (click)="submit()" />
                         </div>
                     </form>
 
+                    <p-table [value]="companyObjects" [tableStyle]="{ 'min-width': '50rem' }">
+                        <ng-template pTemplate="header">
 
-                    <p-table [value]="companyObjects" showGridlines [tableStyle]="{ 'min-width': '50rem' }">
-                        <ng-template #header>
                             <tr>
                                 <th>Company Name</th>
                                 <th>GSTIN</th>
@@ -183,25 +180,22 @@
                                 <th>Actions</th>
                             </tr>
                         </ng-template>
-                        <ng-template #body let-company>
+                        <ng-template pTemplate="body" let-company>
                             <tr>
-                                <td>{{ company.CompanyName}}</td>
-                                <td>{{ company.GSTIN }}</td>
-                                <td>{{ company.CIN }}</td>
-                                <td>{{ company.AddressLine1 }}</td>
-                                <td>{{ company.AddressLine2 }}</td>
-                                <td>{{ company.City }}</td>
-                                <td>{{ findState(company.StateId) }}</td>
-                                <td>{{ findCountry(company.CountryId) }}</td>
-                                <td>{{ company.ZipCode }}</td>
 
+                                <td>{{company.companyName}}</td>
+                                <td>{{company.gstin}}</td>
+                                <td>{{company.cin}}</td>
+                                <td>{{company.addressLine1}}</td>
+                                <td>{{company.addressLine2}}</td>
+                                <td>{{company.city}}</td>
+                                <td>{{ company.state }}</td>
+                                <td>{{ findCountry(company.countryId) }}</td>
+                                <td>{{company.zipCode}}</td>
                                 <td>
                                     <div class="row" style="justify-content: center;">
-                                        <button class="btn btn-primary" (click)="editClick(company.CompanyName)"><i
-                                                class="fa fa-edit"></i></button>
-                                        <button class="btn btn-danger mx-2"
-                                            (click)="deleteClick(company.CompanyName)"><i
-                                                class="fa fa-trash-alt"></i></button>
+                                        <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-primary" (click)="editClick(company.companyName)"></button>
+                                        <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger ml-2" (click)="deleteClick(company.companyName)"></button>
                                     </div>
                                 </td>
                             </tr>
@@ -210,10 +204,6 @@
                 </ng-template>
             </p-step-panel>
 
-            <p-step-panel [value]="3">
-                <ng-template #content let-activateCallback="activateCallback">
-                </ng-template>
-            </p-step-panel>
         </p-step-panels>
     </p-stepper>
 </div>
