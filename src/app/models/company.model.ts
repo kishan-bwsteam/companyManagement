@@ -12,7 +12,7 @@ export interface Company {
     state?: string;
     countryId: number;
     country?: string;
-    zipCode: number;
+    zipCode: string;
     gstin: string;
     cin: string;
 }
