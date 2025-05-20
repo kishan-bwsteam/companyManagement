@@ -21,6 +21,7 @@ import { GlobalService } from '../../services/global.service';
 import { AdminUser } from '../../models/User.model';
 import { Company } from '../../models/company.model';
 import { AdminService } from '../../services/admin.service';
+import { CommonModule } from '@angular/common';
 
 
 @Component({
@@ -232,8 +233,7 @@ export class CreateAdminComponent implements OnInit {
           detail: res.message || 'Unexpected response from server'
         });
       }
-    },
-    error: (error) => {
+    },(error) => {
       console.error("Error from server:", error);
       this.messageService.add({
         severity: 'error',
@@ -241,7 +241,7 @@ export class CreateAdminComponent implements OnInit {
         detail: error?.error?.message || 'Something went wrong. Please try again later.'
       });
     }
-  });
+  );
 }
 
 }
