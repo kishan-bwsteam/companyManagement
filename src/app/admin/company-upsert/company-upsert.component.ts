@@ -29,7 +29,7 @@ export class CompanyUpsertComponent implements OnInit {
     companyName: '',
     addressLine1: '',
     addressLine2: '',
-    zipCode: 0,
+    zipCode: '',
     country: '',
     gstin: '',
     cin: '',

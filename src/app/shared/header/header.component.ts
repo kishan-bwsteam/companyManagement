@@ -33,10 +33,13 @@ export class HeaderComponent implements OnInit {
   }
   ngOnInit(): void {
     this.authToggle = this.global.isAuthenticated();
-    this.getcompanylist();
+    if (this.global.token.userTypeId == 2){
+      this.getcompanylist();
+    }
   }
   companyList: any[] = [];
   getcompanylist() {
+    debugger
     var token = sessionStorage.getItem("token");
     var header = new HttpHeaders({
       "Authorization": "Bearer " + token

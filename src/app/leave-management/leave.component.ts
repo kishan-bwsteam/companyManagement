@@ -31,28 +31,8 @@ import { LeaveRequestsComponent } from './leave-requests/leave-requests.componen
 
 export class LeaveComponent implements OnInit {
   constructor(private leaveService: LeaveService, private datePipe: DatePipe) {
-    
-    // this.resetForm();
-
-
-    // this.defaultDate = new Date();
-    // this.date = this.defaultDate;
- 
-
-
-
-
-
-
-
-
-    
-
-
   }
-  ngOnInit(): void {
-    console.log("11");
-    
+  ngOnInit(): void {    
   }
   
   
