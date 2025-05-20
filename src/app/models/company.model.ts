@@ -1,8 +1,8 @@
 export interface Company {
-    companyId: number;
-    loginUserID: number;
-    userID: number;
-    companyGuid: string;
+    companyId?: number;
+    loginUserID?: number;
+    userID?: number;
+    companyGuid?: string;
     franchiseID?: number; // Nullable in C#
     companyName: string;
     addressLine1: string;
@@ -12,7 +12,7 @@ export interface Company {
     state?: string;
     countryId: number;
     country?: string;
-    zipCode: number;
+    zipCode: string;
     gstin: string;
     cin: string;
 }

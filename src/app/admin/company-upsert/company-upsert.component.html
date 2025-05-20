@@ -26,7 +26,7 @@
         <div class="form-group col-md-6">
             <label>State</label>
             <p-select [options]="stateList" optionLabel="stateName" optionValue="stateId" formControlName="stateId"
-                placeholder="Select a State" class="form-control p-0" />
+                placeholder="Select a State"  class="form-control p-0" />
             <!-- <small *ngIf="f['stateId'].touched && f['stateId'].invalid" class="text-danger">Required</small> -->
         </div>
     </div>
@@ -34,13 +34,13 @@
     <div class="form-row">
         <div class="form-group col-md-4">
             <label>Zip Code</label>
-            <input type="number" class="form-control" formControlName="zipCode" />
+            <input class="form-control" formControlName="zipCode" />
             <small *ngIf="f['zipCode'].touched && f['zipCode'].invalid" class="text-danger">Enter valid zip</small>
         </div>
         <div class="form-group col-md-4">
             <label>Country</label>
             <p-select [options]="countryList" optionLabel="countryName" optionValue="countryId" formControlName="countryId"
-                placeholder="Select a Country" class="form-control p-0" />
+                placeholder="Select a Country" (onChange)="onCountryChange($event.value)" class="form-control p-0" />
             <!-- <small *ngIf="f['country'].touched && f['country'].invalid" class="text-danger">Required</small> -->
         </div>
         <div class="form-group col-md-4">

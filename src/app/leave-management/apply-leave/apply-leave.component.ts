@@ -48,7 +48,7 @@ export class ApplyLeaveComponent implements OnInit{
   }
   ngOnInit() {
     this.getLeaveTypes();
-    this.getStats();
+    // this.getStats();
 
     this.calculatVals();
 

@@ -1,3 +1,5 @@
+import { Company } from "./company.model";
+
 export default interface User {
     userID: number,
     userTypeId: number,
@@ -17,9 +19,26 @@ export interface EmployeeModel extends EmployeeDetail{
     userEducation: UserEducation[];
     userBankDetail: UserBankDetail;
 }
-export interface AdminUser extends UserBasic, UserAddress{
-    emailID:string
+export interface AdminUser{
+  userID: number;
+  userGuid?: string;
+  firstName: string;
+  lastName: string;
+  middleName: string;
+  userName: string;
+  addressLine1: string;
+  addressLine2: string;
+  city: string;
+  stateId: number;
+  stateName?: string;
+  countryId: number;
+  countryName?: string;
+  zipCode: string;
+  emailID: string;
+  companyList: Company[];
 }
+
+
 export interface EmployeeDetail{
     empId?: number;
     userID?: number;
