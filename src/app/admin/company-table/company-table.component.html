@@ -11,8 +11,9 @@
                 Add</a>
         </div>
     </div>
-    <p-table [value]="companyList" [tableStyle]="{ 'min-width': '60rem' }" showGridlines>
-        <ng-template #header>
+    <p-table [value]="companyList" selectionMode="single" [paginator]="true" [rows]="rows" [totalRecords]="totalRecords" [lazy]="true"
+    (onPage)="onPageChange($event)" [loading]="loading" showGridlines [tableStyle]="{ 'min-width': '50rem' }">
+        <ng-template pTemplate="header">
             <tr>
                 <th>Index</th>
                 <th>Company Name</th>
@@ -25,11 +26,11 @@
                 <th>Actions</th>
             </tr>
         </ng-template>
-        <ng-template #body let-cp let-i="rowIndex">
-            <tr [pSelectableRow]="cp">
-                <td>{{i + 1}}</td>
-                <td>{{cp.companyName}}</td>
-                <td> {{ cp.addressLine1 + ' ' + cp.addressLine2 }}</td>
+        <ng-template pTemplate="body" let-cp let-i="rowIndex">
+            <tr>
+                <td> {{ i + 1 }}</td>
+                <td> {{ cp.companyName }}</td>
+                <td> {{ cp.addressLine1 }} {{ cp.addressLine2 }}</td>
                 <td> {{ cp.city }}</td>
                 <td> {{ cp.state }}</td>
                 <td> {{ cp.country }}</td>

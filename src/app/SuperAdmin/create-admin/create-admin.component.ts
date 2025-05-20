@@ -17,9 +17,11 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { Ripple } from 'primeng/ripple';
 import { GlobalService } from '../../services/global.service';
+
 import { AdminUser } from '../../models/User.model';
 import { Company } from '../../models/company.model';
 import { AdminService } from '../../services/admin.service';
+
 
 @Component({
   selector: 'app-create-admin',
@@ -35,7 +37,8 @@ import { AdminService } from '../../services/admin.service';
     ButtonModule,
     FormsModule,
     Toast,
-    DatePickerModule],
+    DatePickerModule,
+    CommonModule],
   templateUrl: './create-admin.component.html',
   styleUrl: './create-admin.component.css',
   providers: [MessageService]
@@ -112,6 +115,8 @@ export class CreateAdminComponent implements OnInit {
   })
   companyObjects: Company[] = [];
   companyForm = new FormGroup({
+
+
     companyId:new FormControl(0),
     companyName: new FormControl("", Validators.required),
     addressLine1: new FormControl("", Validators.required),
@@ -123,6 +128,7 @@ export class CreateAdminComponent implements OnInit {
     gstin: new FormControl(""),
     cin: new FormControl(""),
   });
+
   isAllFormValid() {
     return this.companyObjects.length > 0
   }
@@ -153,6 +159,7 @@ export class CreateAdminComponent implements OnInit {
       this.companyObjects.splice(index, 1);
 
       this.companyForm.patchValue({
+
         companyId:ob?.companyId,
         companyName: ob?.companyName,
         gstin: ob?.gstin,
@@ -190,7 +197,9 @@ export class CreateAdminComponent implements OnInit {
     this.companyForm.reset();
   }
 
+
   submit() {
+
     const franchise = this.personalForm.getRawValue();
 
     const param: AdminUser = {
@@ -217,10 +226,22 @@ export class CreateAdminComponent implements OnInit {
           this.router.navigate([""]);
         }, 2000);
       } else {
-        this.messageService.add({ severity: 'error', summary: "Error", detail: res.message });
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: res.message || 'Unexpected response from server'
+        });
       }
-    }, (error) => {
-      this.messageService.add({ severity: 'error', summary: "Error", detail: 'Something went wrong!!' });
-    })
-  }
+    },
+    error: (error) => {
+      console.error("Error from server:", error);
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Submission Failed',
+        detail: error?.error?.message || 'Something went wrong. Please try again later.'
+      });
+    }
+  });
+}
+
 }

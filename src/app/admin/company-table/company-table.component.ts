@@ -7,6 +7,7 @@ import { CompanyService } from '../../company/company.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
+import { Company } from '../../models/company.model';
 
 @Component({
   selector: 'app-company-table',
@@ -16,36 +17,47 @@ import { ToastModule } from 'primeng/toast';
   providers: [MessageService, ConfirmationService]
 })
 export class CompanyTableComponent implements OnInit {
+  companyList: Company[] = [];
+  selectedCompany = {};
+  totalRecords: number = 0;
+  loading: boolean = false;
+  startingRow: number = 0;
+  rows: number = 5;
+
   constructor(private http: HttpClient,
     private global: GlobalService,
     private companyService: CompanyService,
     private confirmationService: ConfirmationService,
     private messageService: MessageService
-  ) {
+  ) {}
 
-  }
   ngOnInit(): void {
     this.getcompanylist();
   }
-  companyList: any[] = [];
-  selectedCompany = {};
 
   getcompanylist() {
-    var token = sessionStorage.getItem("token");
-    var header = new HttpHeaders({
+    const token = sessionStorage.getItem("token");
+    const header = new HttpHeaders({
       "Authorization": "Bearer " + token
     })
-    this.companyService.getall().subscribe((res: any) => {
-      this.companyList = res;
-    }, (error) => {
-      console.log(error);
-
-    })
+    this.companyService.getall().subscribe({
+      next: (res: any)=>{
+        this.companyList = res.data;
+        this.totalRecords = res.totalRecords;
+        this.loading = false;
+      },error: (err) => {
+        console.error(err);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to fetch companies' });
+        this.loading = false;
+      }
+  });
   }
 
-
-
-
+  onPageChange(event: any): void {
+    this.startingRow = event.first;
+    this.rows = event.rows;
+    this.getcompanylist();
+  }
 
   confirmDelete(companyId: number): void {
     this.confirmationService.confirm({

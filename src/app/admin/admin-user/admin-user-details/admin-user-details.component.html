@@ -10,6 +10,7 @@
         (onPage)="onPageChange($event)" [loading]="loading" showGridlines [tableStyle]="{ 'min-width': '50rem' }">
         <ng-template pTemplate="header">
             <tr>
+                <th>Index</th>
                 <th>Id</th>
                 <th>User Name</th>
                 <th>Name</th>
@@ -17,8 +18,9 @@
                 <th>Actions</th>
             </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-admin>
+        <ng-template pTemplate="body" let-admin let-i="rowIndex">
             <tr>
+                <td>{{ i+1 }}</td>
                 <td>{{ admin.userID }}</td>
                 <td>{{ admin.userName }}</td>
                 <td>{{ admin.firstName }} {{ admin.middleName }} {{ admin.lastName }}</td>

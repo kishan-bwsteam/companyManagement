@@ -10,13 +10,10 @@ import { PaginatedResult } from '../models/paginatedResult.modal';
 })
 export class AdminService {
 
-  constructor(private http: HttpClient, private global: GlobalService) {
+  constructor(private http: HttpClient, private global: GlobalService) {}
 
-  }
 
   getAdmins(limit: number, startingRow: number, search?: string): Observable<PaginatedResult<AdminUser>> {
-   
-
     const token = sessionStorage.getItem("token");
     const headers = new HttpHeaders({
       "Authorization": "Bearer " + token
@@ -26,7 +23,7 @@ export class AdminService {
       .set('limit', limit.toString())
       .set('startingRow', startingRow.toString());
     if (search !== undefined) {
-      params = params.set('search',search);
+      params = params.set('search', search);
     }
 
     return this.http.get<PaginatedResult<AdminUser>>(this.global.baseUrl + "api/admin/", { headers, params });

@@ -45,7 +45,7 @@ export class HeaderComponent implements OnInit {
       "Authorization": "Bearer " + token
     })
     this.http.get(this.global.baseUrl + "api/Company", { headers: header }).subscribe((res: any) => {
-      this.companyList = res;
+      this.companyList = res.data;
 
     }, (error) => {
       console.log(error);

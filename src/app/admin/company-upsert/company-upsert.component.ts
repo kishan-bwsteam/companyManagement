@@ -10,6 +10,8 @@ import { DropdownModule } from 'primeng/dropdown';
 import { SelectModule } from 'primeng/select';
 import { HttpClient } from '@angular/common/http';
 import { GlobalService } from '../../services/global.service';
+import Country from '../../models/country.model';
+import State from '../../models/state.model';
 
 @Component({
   selector: 'app-company-upsert',
@@ -38,12 +40,10 @@ export class CompanyUpsertComponent implements OnInit {
     countryId: 0
   };
   isEditMode = false;
-  stateList: any[] = [];
-  countryList: any[] = [];
-  
+  stateList: State[] = [];
+  countryList: Country[] = [];
   
   constructor(
-    private http:HttpClient,
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
@@ -58,12 +58,10 @@ export class CompanyUpsertComponent implements OnInit {
     city: ['',Validators.required],
     stateId: [null, Validators.required],
     countryId: [null, Validators.required],
-    zipCode: ['', [Validators.required, Validators.min(10000)]],
+    zipCode: ['', Validators.required],
     gstin: ['', Validators.required],
     cin: ['', Validators.required],
   });
-  
-    
   }
 
   ngOnInit(): void {
@@ -72,24 +70,19 @@ export class CompanyUpsertComponent implements OnInit {
       this.isEditMode = true;
       this.loadCompany(+id);
     }
-    this.getState();
     this.getCountry();
   }
 
-  getState() {
-    this.http.get(this.global.baseUrl + "/api/EmpAddress/State").subscribe((res: any) => {
-      if (res.status == 200 && res.stateList.length > 0) {
-        this.stateList = res.stateList;
-      }
+  getState(countryId: number) {
+    this.global.getStatesByCountryId(countryId).subscribe((res: any) => {
+      this.stateList = res;
     }, (error) => {
       console.log(error);
     })
   }
   getCountry() {
-    this.http.get(this.global.baseUrl + "/api/EmpAddress/Country").subscribe((res: any) => {
-      if (res.status == 200 && res.countryList.length > 0) {
-        this.countryList = res.countryList;
-      }
+    this.global.getCountries().subscribe((res: any) => {
+      this.countryList = res;
     }, (error) => {
       console.log(error);
     })
@@ -109,6 +102,7 @@ export class CompanyUpsertComponent implements OnInit {
           gstin: c.gstin,
           cin: c.cin
         });
+        this.getState(c.countryId);
     });
   }
 
@@ -123,9 +117,10 @@ export class CompanyUpsertComponent implements OnInit {
       ...this.companyObject,
       ...formVal
     };
-
+    debugger;
     this.companyService.upsert(payload).subscribe({
       next: (res: any) => {
+        debugger;
         if (res.status === 200) {
           this.messageService.add({ severity: 'success', summary: 'Success', detail: res.message });
           this.router.navigate(['/companyTable']);
@@ -141,5 +136,13 @@ export class CompanyUpsertComponent implements OnInit {
 
   get f() {
     return this.companyForm.controls;
+  }
+
+  onCountryChange(countryId: number){
+    this.global.getStatesByCountryId(countryId).subscribe((res:any)=>{
+      this.stateList = res;
+    },(error) => {
+      console.log(error);
+    })
   }
 }

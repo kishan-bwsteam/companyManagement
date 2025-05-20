@@ -14,6 +14,7 @@
     <ng-template pTemplate="header">
         <tr>
             <th>Index</th>
+            <th>Employee Id</th>
             <th>User Name</th>
             <th>Name</th>
             <th>isActive</th>
@@ -23,6 +24,7 @@
     <ng-template pTemplate="body" let-admin let-i="rowIndex">
         <tr>
             <td>{{ i+1 }}</td>
+            <td>{{ admin.userID }}</td>
             <td>{{ admin.userName }}</td>
             <td>{{ admin.firstName }} {{ admin.middleName }} {{ admin.lastName }}</td>
             <td>{{ admin.emailID }}</td>
