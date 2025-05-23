@@ -35,8 +35,7 @@ export class PersonalComponent implements OnInit {
       lastName: '',
       middleName: '',
       userName: '',
-      userTypeID: 0,
-      parentUserID: 0
+      userTypeID: 0
     },
     userAddress: [],
     userEducation: [],

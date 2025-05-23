@@ -13,7 +13,6 @@ import { CommonModule } from '@angular/common';
 import { EmployeeDetail, EmployeeModel, UserAddress, UserBankDetail, UserBasic, UserEducation } from '../../models/User.model';
 import { EmployeeService } from '../../services/employee.service';
 import { CalendarModule } from 'primeng/calendar';
-import { UserTypeService } from '../../services/user-type.service';
 import UserType from '../../models/userType.model';
 import { DepartmentService } from '../../services/department.service';
 import { ActivatedRoute, Route, Router } from '@angular/router';
@@ -59,14 +58,6 @@ export class CompanyEmployeeUpsertComponent implements OnInit {
   userBankForm: FormGroup;
   userAddressForm: FormGroup;
   userEducationForm: FormGroup;
-  userTypes: UserType[] = [];
-  getUserTypes() {
-    this.userTypeService.get().subscribe((res: any) => {
-      this.userTypes = res;
-    }, (error) => {
-      console.log(error);
-    })
-  }
 
   states: State[] = [];
 
@@ -126,7 +117,6 @@ export class CompanyEmployeeUpsertComponent implements OnInit {
   constructor(private fb: FormBuilder,
     private addressTypeService: AddressTypeService,
     private employeeService: EmployeeService,
-    private userTypeService: UserTypeService,
     private departmentService: DepartmentService,
     private companyService: CompanyService,
     private router: Router,
@@ -146,8 +136,7 @@ export class CompanyEmployeeUpsertComponent implements OnInit {
       lastName: ['', Validators.required],
       userName: ['', Validators.required],
       middleName: [''],
-      userTypeID: [null, Validators.required],
-      parentUserID: [null],
+      userTypeID: [3, Validators.required]
     });
     // Employee Basic Form
     this.employeeBasicForm = this.fb.group({
@@ -229,7 +218,6 @@ export class CompanyEmployeeUpsertComponent implements OnInit {
     this.addAddress();
     this.addEducation();
 
-    this.getUserTypes();
     this.getDepartments();
     this.getCompanies();
     this.getAddressTypes();
@@ -259,8 +247,7 @@ export class CompanyEmployeeUpsertComponent implements OnInit {
       lastName: employee.userBasic?.lastName || '',
       userName: employee.userBasic?.userName || '',
       middleName: employee.userBasic?.middleName || '',
-      userTypeID: employee.userBasic?.userTypeID || null,
-      parentUserID: employee.userBasic?.parentUserID || null
+      userTypeID: employee.userBasic?.userTypeID || null
     });
 
     this.employeeBasicForm.patchValue({

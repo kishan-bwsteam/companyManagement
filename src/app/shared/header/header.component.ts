@@ -39,7 +39,6 @@ export class HeaderComponent implements OnInit {
   }
   companyList: any[] = [];
   getcompanylist() {
-    debugger
     var token = sessionStorage.getItem("token");
     var header = new HttpHeaders({
       "Authorization": "Bearer " + token

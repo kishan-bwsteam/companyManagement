@@ -1,5 +1,13 @@
-<p-table [value]="adminlist" selectionMode="single" [paginator]="true" [rows]="rows" [totalRecords]="totalRecords" [lazy]="true"
-    (onPage)="onPageChange($event)" [loading]="loading" showGridlines [tableStyle]="{ 'min-width': '50rem' }">
+<p-table [value]="adminlist" 
+    selectionMode="single" 
+    [paginator]="true" 
+    [rows]="rows" 
+    [totalRecords]="totalRecords" 
+    [lazy]="true"
+    (onPage)="onPageChange($event)" 
+    [loading]="loading" 
+    showGridlines 
+    [tableStyle]="{ 'min-width': '50rem' }">
     <ng-template #caption>
         <div class="flex">
             <p-iconfield iconPosition="left" class="ml-auto">

@@ -1,0 +1,56 @@
+<div class="card">
+  <p-toast></p-toast>
+  
+  <div class="flex justify-content-between align-items-center mb-4">
+    <h2>{{ isEditMode ? 'Edit Holiday' : 'Add New Holiday' }}</h2>
+  </div>
+
+  <form [formGroup]="holidayForm" (ngSubmit)="onSubmit()">
+    <div class="p-fluid grid">
+      <div class="field col-12 md:col-6">
+        <label for="holidayName">Holiday Name</label>
+        <input 
+          id="holidayName" 
+          type="text" 
+          pInputText 
+          formControlName="holidayName"
+        />
+        <small *ngIf="holidayForm.get('holidayName')?.invalid && holidayForm.get('holidayName')?.touched" 
+               class="p-error">Holiday name is required</small>
+      </div>
+
+      <div class="field col-12 md:col-6">
+        <label for="holidayDate">Date</label>
+        <p-datepicker  
+          id="holidayDate" 
+          formControlName="holidayDate" 
+          dateFormat="mm/dd/yy" 
+          [showIcon]="true"
+        ></p-datepicker >
+        <small *ngIf="holidayForm.get('holidayDate')?.invalid && holidayForm.get('holidayDate')?.touched" 
+               class="p-error">Date is required</small>
+      </div>
+
+
+    </div>
+
+    <div class="flex justify-content-end mt-4 gap-2">
+      <button 
+        pButton 
+        type="button" 
+        label="Cancel" 
+        icon="pi pi-times" 
+        class="p-button-secondary" 
+        (click)="onCancel()"
+        [disabled]="loading"
+      ></button>
+      <button 
+        pButton 
+        type="submit" 
+        label="{{ isEditMode ? 'Update' : 'Create' }}" 
+        icon="pi pi-check" 
+        [disabled]="holidayForm.invalid || loading"
+      ></button>
+    </div>
+  </form>
+</div>
