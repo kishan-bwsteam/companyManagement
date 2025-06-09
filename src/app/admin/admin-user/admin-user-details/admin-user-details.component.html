@@ -6,15 +6,26 @@
                 Add</a>
         </div>
     </div>
-    <p-table [value]="UserList" [paginator]="true" [rows]="rows" [totalRecords]="totalRecords" [lazy]="true"
+    <p-table [value]="UserList" selectionMode="single" [paginator]="true" [rows]="rows" [totalRecords]="totalRecords" [lazy]="true"
         (onPage)="onPageChange($event)" [loading]="loading" showGridlines [tableStyle]="{ 'min-width': '50rem' }">
+        <ng-template #caption>
+            <div class="flex">
+                <p-iconfield iconPosition="left" class="ml-auto">
+                    <p-inputicon>
+                        <i class="pi pi-search"></i>
+                    </p-inputicon>
+                    <input pInputText type="text" (input)="search($event)"
+                        placeholder="        Search keyword" />
+                </p-iconfield>
+            </div>
+        </ng-template>
         <ng-template pTemplate="header">
             <tr>
                 <th>Index</th>
-                <th>Id</th>
+                <th>User Id</th>
                 <th>User Name</th>
                 <th>Name</th>
-                <th>isActive</th>
+                <th>Email</th>
                 <th>Actions</th>
             </tr>
         </ng-template>
@@ -24,12 +35,11 @@
                 <td>{{ admin.userID }}</td>
                 <td>{{ admin.userName }}</td>
                 <td>{{ admin.firstName }} {{ admin.middleName }} {{ admin.lastName }}</td>
-                <td>{{ admin.isActive }}</td>
+                <td>{{ admin.emailId }}</td>
                 <td>
                     <div class="row" style="justify-content: center;">
                         <a class="btn btn-primary" [routerLink]="[admin.userID]"><i class="fa fa-edit"></i></a>
-                        <button class="btn btn-danger mx-2" (click)="deleteUser(admin.userId)"><i
-                                class="fa fa-trash-alt"></i></button>
+                        <button class="btn btn-danger mx-2" (click)="deleteUser(admin.userID)"><i class="fa fa-trash-alt"></i></button>
                     </div>
                 </td>
             </tr>

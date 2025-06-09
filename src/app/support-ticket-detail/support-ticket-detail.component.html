@@ -1,0 +1,61 @@
+<div class="mt-2">
+  <div class="row mx-2">
+    <h2>Support Ticket</h2>
+    <div class="ml-auto col-8 text-right">
+      <button class="btn btn-primary" [routerLink]="['/SupportTicket']">
+        <i class="fa fa-plus"></i>&nbsp; Create
+      </button>
+    </div>
+  </div>
+
+  <div class="page-content support-ticket scrollable">
+    <p-table [value]="SupportTicketList" selectionMode="single" [paginator]="true" [rows]="10" [sortField]="order"
+             [sortOrder]="reverse ? 1 : -1" class="p-datatable-striped">
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width: 15%;">Ticket Status</th>
+          <th pSortableColumn="ticketSubject">Subject <p-sortIcon field="ticketSubject"></p-sortIcon></th>
+          <th>Issue</th>
+          <th pSortableColumn="createdBy" style="width: 15%;">Franchisee <p-sortIcon field="createdBy"></p-sortIcon></th>
+          <th pSortableColumn="updatedOn" >Last Updated <p-sortIcon field="updatedOn"></p-sortIcon></th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-ticket>
+        <tr>
+          <td>
+            <button [routerLink]="['/SupportTicketInfo', ticket.ticketGUID]" [ngClass]="{
+              'badge bg-danger': ticket.ticketPriorityID === 4,
+              'badge bg-warning': ticket.ticketPriorityID === 3,
+              'badge bg-info': ticket.ticketPriorityID === 2,
+              'badge bg-success': ticket.ticketPriorityID === 1
+            }">
+              {{ ticket.ticketStatusName }}
+            </button>
+          </td>
+          <td>{{ ticket.ticketSubject }}</td>
+          <td>
+            <a class="text-primary">
+              #{{ ticket.ticketID }}: {{ ticket.ticketSubject }}
+            </a>
+            <div>
+              Created: {{ ticket.createdOn | date: 'MMM d, y @ h:mma' }}
+              <span *ngIf="ticket.createdBy">by {{ ticket.createdBy }}</span>
+            </div>
+          </td>
+
+          <td>{{ ticket.createdBy }}</td>
+
+          <td>
+            Updated: {{ ticket.updatedOn | date: 'MMM d, y @ h:mma' }}
+            <span *ngIf="ticket.updatedBy">by {{ ticket.updatedBy }}</span>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+
+  <div class="data-not-available" *ngIf="!dataAvailable">
+    Sorry! No ticket(s) available.
+  </div>
+</div>

@@ -1,0 +1,43 @@
+.sub-headline {
+    background-color: antiquewhite;
+    padding-left: 1%;
+
+}
+
+.col-lg-12.margin-top-15.ng-star-inserted {
+    padding-top: 2%;
+}
+.portlet-title.cursor-pointer {
+    background-color: #cdbfad;
+}
+.caption {
+    padding-left: 1%;
+}
+
+.portlet-body.tabs-below {
+    padding-left: 1%;
+}
+
+.portlet.box.orange {
+    border: 1px solid #737272;
+    border-radius: 6px!important;
+    margin-top: 1%;
+
+}
+.form-group {
+    margin-top: 2%;
+}
+.attachment-container
+{
+    border: 1px solid #737272;
+    border-radius: 6px!important;
+    margin-top: 1%;
+}
+:host{
+    width: 100%;
+    display: block;
+}
+
+.error-span {
+    color: red;
+}

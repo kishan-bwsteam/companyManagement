@@ -1,0 +1,198 @@
+<div class="container-fluid">
+    <div class="inner-container">
+        <div class="page-header clearfix">
+            <h2 class="page-heading">Support Ticket</h2>
+        </div>
+        <div class="page-content">
+            <div class="sub-headline"><strong>Ticket Info</strong></div>
+            <!------------------------------------------UPDATE---------------------------------------------->
+            <div class="col-lg-12 margin-top-15" *ngIf="SupportTicketList.length>0">
+                <ul class="list-inline support-ticket custom-ticket" [ngClass]="SupportTicketList[0].StatusName | lowercase">
+                    <strong>  
+                        <li title="{{SupportTicketList[0].priorityTypeName}}" class="list-inline-item">
+                            <button>{{ SupportTicketList[0].ticketStatusName }}</button>
+                        </li>
+                        <li title="{{SupportTicketList[0].priorityName}}" class="list-inline-item">  #{{SupportTicketList[0].supportTicketDetailId}}: {{SupportTicketList[0].ticketSubject}}</li>
+                        <li title="{{SupportTicketList[0].priorityName}}" class="list-inline-item">Created: {{SupportTicketList[0].createdOn | date:'MMM d, y @ h:mm a'}} 
+                            <span *ngIf="SupportTicketList[0].CreatedBy">By {{SupportTicketList[0].CreatedBy}}</span>
+                        </li>
+                    </strong>
+                </ul>
+                <div class="tmargin15" *ngFor="let ticket Of SupportTicketList;let i = index">
+                    <div class="portlet box orange">
+                        <div class="portlet-title cursor-pointer" (click)="openTab('TabClick_' + i)">
+                            <div class="caption">
+                                {{ticket.replyOn  | date:'MMM d, y @ h:mm a'}}
+                                <span *ngIf="ticket.replyBy"> by {{ticket.replyBy}}</span>
+                                <i class="fa fa-angle-down" data-toggle="tab-content" data-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2"></i>
+                            </div>                         
+                            <div class="tools">
+                                <a class="collapse"></a>
+                                <a style="display: block;" href="javascript:;" id="TabClick_{{i}}" data-original-title=""></a>
+                            </div>
+                        </div>
+                        <div class="portlet-body tabs-below" style="display: block;">
+                            <div class="tab-content" >
+                                <div class="tab-pane active in clearfix row" id="{{ticket.ticketID}}">
+                                    <div class="col-lg-9 col-md-9 col-sm-12">
+                                        <p [innerHTML]="ticket.ticketDetail"></p>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-12">
+                                        <table class="default-table dgray-header" *ngIf="uploadedFiles.length > 0">
+                                            <thead>
+                                                <tr>
+                                                    <th colspan="2">Attachment<span class="text-lowercase">(s)</span></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let attachment Of uploadedFiles;let j = index">                                                   
+                                                    <td *ngIf="attachment.supportTicketDetailId==ticket.supportTicketDetailId">
+                                                        Attachment-{{j}}
+                                                    </td>
+                                                    <td class="text-left attachment" *ngIf="attachment.supportTicketDetailId==ticket.supportTicketDetailId">
+                                                        <a href="{{attachment.attachmentName}}" target="_blank">
+                                                            <i class="fa fa-paperclip" aria-hidden="true"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-----------------------------------------------------SaveSupportTicketDetails------------------------------------------------------------------->
+
+            <form [formGroup]="SupportTicketForm" (ngSubmit)="SaveUpdateSupportTicketDetails()" *ngIf="SupportTicketList.length==0">
+                <div class="clearfix">
+                    <div class="col-sm-6 col-lg-4">
+                        <div class="form-group">
+                            <label>Issue Type</label>
+                            <span class="error-span" *ngIf="Submitted && SupportTicketForm.value.TicketTypeID==-1">Issue type is required</span>
+                            <select formControlName="TicketTypeID" class="form-control">
+                                <option value="-1">Select</option>
+                                <option *ngFor="let IssueType of TicketTypeList" [value]="IssueType.TicketTypeID">
+                                    {{IssueType.TicketTypeName}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-4">
+                        <div class="form-group">
+                            <label>Subject<span class="required">*</span></label>
+                            <span class="error-span" *ngIf="Submitted && SupportTicketForm.controls['TicketSubject'].invalid">Ticket Subject is required</span>
+                            <input type="text" class="form-control" formControlName="TicketSubject" />
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label>Priority</label>
+                            <ul class="stylish-radio">
+                                <li>
+                                    <div class="priority-radio">
+                                        <label class="priority low">
+                                            <input type="radio" name="PriorityTypeID" value="3231" formControlName="PriorityTypeID">
+                                            <span>Low</span>
+                                        </label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="priority-radio">
+                                        <label class="priority medium">
+                                            <input type="radio" name="PriorityTypeID" value="3233" formControlName="PriorityTypeID">
+                                            <span>Medium</span>
+                                        </label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="priority-radio">
+                                        <label class="priority high">
+                                            <input type="radio" name="PriorityTypeID" value="3232" formControlName="PriorityTypeID">
+                                            <span>High</span>
+                                        </label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="priority-radio">
+                                        <label class="priority critical">
+                                            <input type="radio" name="PriorityTypeID" value="3234" formControlName="PriorityTypeID">
+                                            <span>Critical</span>
+                                        </label>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label>Message<span class="required"> *</span></label>
+                            <span class="error-span" *ngIf="Submitted && SupportTicketForm.controls['TicketDetail'].invalid"> Description is required</span>
+                            <textarea pInputText class="form-control" formControlName="TicketDetail"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label>Attachment</label>
+                            <div class="attachment-container">
+                                <!-- <p-fileUpload name="demo[]" customUpload="true" (uploadHandler)="onFileChange($event)" url="https://www.primefaces.org/cdn/api/upload.php"
+                                    multiple="multiple" accept=".jpg,.jpeg,.png,.PNG,.gif,.doc,.docx,.ppt,.MP4,.MP3,.AVI,.mp4,.mp3,.avi,.pptx,application/pdf" maxFileSize="10000000" auto="true">
+                                </p-fileUpload> -->
+                                <input type="file" (change)="onFileChange($event)" multiple accept=".jpg,.jpeg,.png,.gif,.doc,.docx,.ppt,.pptx,.pdf,.mp4,.mp3,.avi">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <button type="submit" class="btn-custom orange-button">Create Ticket</button>
+                            <button type="button" (click)="Reset()" class="btn-custom orange-button">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <form [formGroup]="SupportTicketUpdateForm" (ngSubmit)="UpdateSupportTicketDetails()" *ngIf="SupportTicketList.length>0">
+                <div class="clearfix">
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label>Message<span class="required"> *</span></label>
+                            <span class="error-span" *ngIf="Submitted && SupportTicketUpdateForm.controls['TicketDetail'].invalid"> Description is required</span>
+                            <textarea class="form-control" formControlName="TicketDetail"></textarea>
+                        </div>
+                    </div>
+                    <input type="hidden" formControlName="TicketSubject" [value]="SupportTicketList[0].ticketSubject">
+    <input type="hidden" formControlName="PriorityTypeID" [value]="SupportTicketList[0].priorityTypeID">
+    <input type="hidden" formControlName="TicketTypeID" [value]="SupportTicketList[0].ticketTypeID">
+                    <div class="col-lg-12">
+                        <div class="form-group pb-4">
+                            <label>Attachment</label>
+                            <div class="attachment-container">
+                                <!-- <p-fileUpload name="demo[]" customUpload="true" (uploadHandler)="onFileChange($event)" url="https://www.primefaces.org/cdn/api/upload.php"
+                                multiple="multiple" accept=".jpg,.jpeg,.png,.PNG,.gif,.doc,.docx,.ppt,.MP4,.MP3,.AVI,.mp4,.mp3,.avi,.pptx,application/pdf" maxFileSize="10000000" auto="true">
+                                 </p-fileUpload> -->
+                                 <input type="file" (change)="onFileChange($event)" multiple accept=".jpg,.jpeg,.png,.gif,.doc,.docx,.ppt,.pptx,.pdf,.mp4,.mp3,.avi">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <button type="submit" class="btn btn-primary">Reply</button>
+                            <button type="button" (click)="Reset()" class="btn btn-danger mx-2">Cancel</button>
+                            <button type="button" *ngIf="SupportTicketList.length>0  && SupportTicketList[0].ticketStatusName == 'Open'"
+                                    (click)="CloseTicket()" class="btn btn-dark">
+                                Close Ticket
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

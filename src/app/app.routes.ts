@@ -20,6 +20,10 @@ import { RoleDetailComponent } from './admin/role/role-detail/role-detail.compon
 import { RoleComponent } from './admin/role/role.component';
 import { AdminUserComponent } from './admin/admin-user/admin-user.component';
 import { AdminUserDetailsComponent } from './admin/admin-user/admin-user-details/admin-user-details.component';
+import { SupportTicketDetailComponent } from './support-ticket-detail/support-ticket-detail.component';
+import { SupportTicketComponent } from './support-ticket/support-ticket.component';
+import { SupportTicketInfoComponent } from './support-ticket-info/support-ticket-info.component';
+import { EventsComponent } from './events/events.component';
 export const routes: Routes = [
     {
         path: "createAdmin/:id",
@@ -113,7 +117,26 @@ export const routes: Routes = [
             },
         ]
     },
+    {
+        path: 'SupportTicketDetail',
+        component: SupportTicketDetailComponent,
+        canActivate: [AuthGuardService]
+    },
+    {
+        path: 'SupportTicket',
+        component: SupportTicketComponent,
+        canActivate: [AuthGuardService]
+    },
+    {
+        path: 'SupportTicketInfo/:TicketGUID',
+        component: SupportTicketInfoComponent
 
+    },
+    {
+        path: 'SupportTicket/:TicketGUID',
+        component: SupportTicketComponent
+
+    },
     {
         path: 'company/department',
         component: DepartmentTableComponent,
@@ -123,6 +146,10 @@ export const routes: Routes = [
         path: 'company/postion',
         component: PositionTableComponent,
         canActivate: [AuthGuardService],
+    },
+    {
+        path: 'events',
+        component: EventsComponent
     },
     {
         path: 'auth',

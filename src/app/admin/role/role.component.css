@@ -12,4 +12,9 @@
   .LH{
     line-height: 35px;
   }
+
+  :host{
+    width: 100%;
+    display: block;
+}
   

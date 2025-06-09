@@ -13,7 +13,7 @@
     <div id="nav-content" class="drawerWidth" [class.aligncenter]="!this.global.drawerVisible">
 
       <ng-container *ngIf="this.global.isSuperAdmin()">
-        <div class="nav-button"><i class="fa-solid fa-ticket"></i><span
+        <div class="nav-button" [routerLink]="['/SupportTicketDetail']"><i class="fa-solid fa-ticket"></i><span
             [class.displayNone]="!this.global.drawerVisible">Support Ticket</span></div>
       </ng-container>
 
@@ -48,13 +48,21 @@
           <div class="nav-button"><i class="fa-solid fa-city"></i><span
               [class.displayNone]="!this.global.drawerVisible">Company</span></div>
         </a>
-        <div class="nav-button"><i class="fa-solid fa-ticket"></i><span
+        <a routerLink="events">
+          <div class="nav-button"><i class="fa-solid fa-clipboard"></i><span
+              [class.displayNone]="!this.global.drawerVisible">Events</span></div>
+        </a>
+        <a routerLink="SupportTicketDetail">
+          <div class="nav-button"><i class="fa-solid fa-ticket"></i><span
             [class.displayNone]="!this.global.drawerVisible">Support Ticket</span></div>
+        </a>
       </ng-container>
 
       <ng-container *ngIf="this.global.isUser()">
-        <div class="nav-button"><i class="fa-solid fa-ticket"></i><span
+        <a routerLink="SupportTicketDetail">
+          <div class="nav-button"><i class="fa-solid fa-ticket"></i><span
             [class.displayNone]="!this.global.drawerVisible">Support Ticket</span></div>
+        </a>
       </ng-container>
 
       <ng-container *ngIf="this.global.isEmployee()">
@@ -70,8 +78,10 @@
             [class.displayNone]="!this.global.drawerVisible">Mails</span></div>
         <div class="nav-button"><i class="fa-solid fa-calendar-days"></i><span
             [class.displayNone]="!this.global.drawerVisible">Attendance</span></div>
-        <div class="nav-button"><i class="fa-solid fa-ticket"></i><span
+        <a routerLink="SupportTicketDetail">
+          <div class="nav-button"><i class="fa-solid fa-ticket"></i><span
             [class.displayNone]="!this.global.drawerVisible">Support Ticket</span></div>
+        </a>
       </ng-container>
       <!-- <div id="nav-content-highlight"></div> -->
     </div>

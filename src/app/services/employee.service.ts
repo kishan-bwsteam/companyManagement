@@ -10,9 +10,8 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class EmployeeService {
-  constructor(private http: HttpClient, private global: GlobalService) {
-
-  }
+  url: string = 'http://localhost:5000/api/';
+  constructor(private http: HttpClient, private global: GlobalService) {}
   getall(companyId: any) {
     return this.http.get(this.global.baseUrl + "api/employee/" + companyId.toString());
   }
@@ -45,6 +44,40 @@ export class EmployeeService {
     var header = new HttpHeaders({
       "Authorization": "Bearer " + token
     })
-    return this.http.delete(this.global.baseUrl + "api/employee/" + empId, {headers : header});
+    return this.http.delete(this.global.baseUrl + "api/employee/" + empId, { headers: header });
   }
+
+  SaveUpdateEmp(Attribute: any): Observable<any> {
+    debugger;
+
+    const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
+    return this.http.post<any>(this.url + 'EmployeePerformance/', Attribute, httpOptions);
+
+  }
+
+
+  //--------------------------------------------------SupportTicket----------------------------------
+  GetAllTickets(userTypeId: number): Observable<any> {
+    return this.http.get<any>(`${this.url}SupportTicketController/GetAll/${userTypeId}`);
+  }
+  GetSingleTickets(ticketGUID: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.url}SupportTicketController/GetSingle/${ticketGUID}`);
+  }
+  TicketuploadFile(files: any): Observable<any> {
+    return this.http.post<any>(`${this.url}SupportTicketController/FileUpload/`, files);
+  }
+  saveOrUpdateTicket(data: any): Observable<any> {
+    return this.http.post<any>(`${this.url}SupportTicketController/`, data);
+  }
+  replyToTicket(data: any): Observable<any> {
+    const token = sessionStorage.getItem('token');
+    const headers = new HttpHeaders({"Authorization": "Bearer" + token, "Content-Type": "application/json"});
+    return this.http.post<any>(`${this.url}SupportTicketController/SaveUpdate`, data, {headers});
+  }
+  closeTicket(ticketGUID: string, actionBy: string): Observable<any>{
+    return this.http.post(`${this.url}SupportTicketController/CloseTicket`,{TicketGuid: ticketGUID, ActionBy: actionBy});
+  }
+  // GetAllTicket(): Observable<any[]> {
+  //   return this.http.get<any[]>(this.url + 'SupportTicketController/');
+  // }
 }

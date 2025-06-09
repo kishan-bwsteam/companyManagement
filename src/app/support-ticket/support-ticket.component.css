@@ -1,0 +1,25 @@
+:host{
+    width: 100%;
+    display: block;
+}
+
+.attachment-container
+{
+    border: 1px solid #737272;
+    border-radius: 6px!important;
+    margin-top: 1%;
+}
+
+.sub-headline {
+    background-color: rgb(217, 238, 231);
+}
+
+input[type="radio"] {
+    appearance: auto; /* Default browser radio style */
+    margin-right: 8px;
+}
+
+.stylish-radio input[type="radio"] {
+    transform: scale(1.2);
+    cursor: pointer;
+}

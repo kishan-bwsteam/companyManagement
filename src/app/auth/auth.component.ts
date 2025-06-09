@@ -23,6 +23,7 @@ export class AuthComponent {
     password: new FormControl("")
   })
   auth(){
+    debugger;
     this.authService.auth(this.authForm.value.email,this.authForm.value.password).subscribe((res:LoginReponse)=>{
       if(res.token != null){
         sessionStorage.setItem("token",res.token);
