@@ -24,4 +24,9 @@
       color: white;
       text-decoration-thickness: auto;
     }
+
+    :host{
+    width: 100%;
+    display: block;
+}
   

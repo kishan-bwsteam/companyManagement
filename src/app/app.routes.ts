@@ -24,6 +24,11 @@ import { LeaveRequestsComponent } from './admin/leave-requests/leave-requests.co
 import { HolidayUpsertComponent } from './company/holiday-upsert/holiday-upsert.component';
 import { HolidayTableComponent } from './company/holiday-table/holiday-table.component';
 import { HolidaysComponent } from './employee/holidays/holidays.component';
+import { SupportTicketDetailComponent } from './support-ticket-detail/support-ticket-detail.component';
+import { SupportTicketComponent } from './support-ticket/support-ticket.component';
+import { SupportTicketInfoComponent } from './support-ticket-info/support-ticket-info.component';
+import { EventsComponent } from './events/events.component';
+
 export const routes: Routes = [
     {
         path: "createAdmin/:id",
@@ -142,7 +147,26 @@ export const routes: Routes = [
             
         ]
     },
+    {
+        path: 'SupportTicketDetail',
+        component: SupportTicketDetailComponent,
+        canActivate: [AuthGuardService]
+    },
+    {
+        path: 'SupportTicket',
+        component: SupportTicketComponent,
+        canActivate: [AuthGuardService]
+    },
+    {
+        path: 'SupportTicketInfo/:TicketGUID',
+        component: SupportTicketInfoComponent
 
+    },
+    {
+        path: 'SupportTicket/:TicketGUID',
+        component: SupportTicketComponent
+
+    },
     {
         path: 'company/department',
         component: DepartmentTableComponent,
@@ -152,6 +176,10 @@ export const routes: Routes = [
         path: 'company/postion',
         component: PositionTableComponent,
         canActivate: [AuthGuardService],
+    },
+    {
+        path: 'events',
+        component: EventsComponent
     },
     {
         path: 'auth',

@@ -34,13 +34,13 @@ export class AdminUserComponent implements OnInit {
   stateList: State[] = [];
   editMode = false;
   userID: number = 0;
+  companyId:  any = 0;
 
   constructor(
     private fb: FormBuilder,
     private adminUserService: AdminUserService,
     private globalService: GlobalService,
     private messageService: MessageService,
-    
     private route: ActivatedRoute,
     private router: Router
   ) {
@@ -64,11 +64,10 @@ export class AdminUserComponent implements OnInit {
       }),
     });
   }
-  companyId:any = 0;
+  
   ngOnInit(): void {
-    debugger
     this.companyId = this.route.parent?.snapshot.paramMap.get('companyId');
-    if (this.companyId == null || this.companyId == undefined ){
+    if (!this.companyId){
       this.router.navigate(["not-found"]);
     }
     this.initializeForm();
@@ -101,7 +100,6 @@ export class AdminUserComponent implements OnInit {
   loadDropdowns(): void {
     this.globalService.getCountries().subscribe(
       (countries: Country[]) => {
-        debugger
         this.countryList = countries;
       },
       error => {
@@ -150,7 +148,6 @@ export class AdminUserComponent implements OnInit {
       dob: this.formatDate(userData.dob)
     });
 
-    // Patch nested address FormGroup separately
     this.adminUserForm.get('address')?.patchValue({
       addressLine1: userData.address?.addressLine1 || '',
       addressLine2: userData.address?.addressLine2 || '',
