@@ -1,0 +1,29 @@
+:host{
+    width: 100%;
+    display: block;
+}
+
+.leavesTable-div {
+  padding: 1rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.search-bar {
+  max-width: 400px;
+}
+
+.flex.gap-2 {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.py-4 {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}

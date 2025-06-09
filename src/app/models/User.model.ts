@@ -61,7 +61,6 @@ export interface UserBasic {
     middleName: string;
     userName: string;
     userTypeID: number;
-    parentUserID: number;
     isActive?: boolean;
 }
 

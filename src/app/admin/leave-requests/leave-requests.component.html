@@ -1,0 +1,89 @@
+<div class="leavesTable-div">
+  <div class="search-bar mb-3">
+    <input 
+      type="text" 
+      [(ngModel)]="searchText" 
+      placeholder="Search by employee name, department..." 
+      class="form-control p-inputtext" 
+      (input)="onSearchChange()" 
+      [disabled]="loading"
+    />
+  </div>
+
+  <p-table 
+    [value]="leaves" 
+    [loading]="loading"
+    [tableStyle]="{ 'min-width': '100%' }"
+    styleClass="p-datatable-striped"
+    selectionMode="single" 
+    [paginator]="true" 
+    [rows]="limit" 
+    [first]="startingRow"
+    [totalRecords]="totalRecords" 
+    [rowsPerPageOptions]="[5, 10, 20, 50]"
+    [lazy]="true"
+    (onPage)="onPageChange($event)" 
+    showGridlines 
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th>#</th>
+        <th>Employee</th>
+        <th>UserName</th>
+        <th>Full Name</th>
+        <th>Department</th>
+        <th>Reason</th>
+        <th>From</th>
+        <th>To</th>
+        <th>Attachment</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-lv let-i="rowIndex">
+      <tr>
+        <td>{{ startingRow + i + 1 }}</td>
+        <td>{{ lv.empCode }} - {{ lv.statusName }}</td>
+        <td>{{ lv.userName }}</td>
+        <td>{{ lv.empFullName }}</td>
+        <td>{{ lv.departmentName }}</td>
+        <td>{{ lv.reasonName }}</td>
+        <td>{{ formatDate(lv.fromDate) }}</td>
+        <td>{{ formatDate(lv.toDate) }}</td>
+        <td><a *ngIf="lv.attachmentName.length > 0" [href]="global.baseUrl + 'upload/' + lv.attachmentName">Download</a> </td>
+        <td>
+          <p-tag 
+            [value]="lv.leaveStatusName" 
+            [severity]="getLeaveStatusSeverity(lv.leaveStatusId)"
+          ></p-tag>
+        </td>
+        <td>
+          <div *ngIf="lv.leaveStatusId == leaveStatusEnum.Pending" class="flex gap-2">
+            <button 
+              pButton 
+              icon="pi pi-check" 
+              class="p-button-success p-button-sm" 
+              (click)="approveRequest(lv.leaveRequestID)"
+              pTooltip="Approve"
+            ></button>
+            <button 
+              pButton 
+              icon="pi pi-times" 
+              class="p-button-danger p-button-sm" 
+              (click)="rejectRequest(lv.leaveRequestID)"
+              pTooltip="Reject"
+            ></button>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="8" class="text-center py-4">
+          No leave requests found
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+</div>

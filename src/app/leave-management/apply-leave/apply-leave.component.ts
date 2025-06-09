@@ -2,7 +2,6 @@ import { AfterContentInit, AfterViewInit, Component, OnInit } from '@angular/cor
 import { LeaveService } from '../../services/leave.service';
 import LeaveType from '../../models/leaveType';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import Leave from '../../models/leave.model';
 import Swal from 'sweetalert2';
 import { CommonModule, DatePipe } from '@angular/common';
 import { Subscription } from 'rxjs';

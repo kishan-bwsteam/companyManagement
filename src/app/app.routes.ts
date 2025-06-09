@@ -20,10 +20,15 @@ import { RoleDetailComponent } from './admin/role/role-detail/role-detail.compon
 import { RoleComponent } from './admin/role/role.component';
 import { AdminUserComponent } from './admin/admin-user/admin-user.component';
 import { AdminUserDetailsComponent } from './admin/admin-user/admin-user-details/admin-user-details.component';
+import { LeaveRequestsComponent } from './admin/leave-requests/leave-requests.component';
+import { HolidayUpsertComponent } from './company/holiday-upsert/holiday-upsert.component';
+import { HolidayTableComponent } from './company/holiday-table/holiday-table.component';
+import { HolidaysComponent } from './employee/holidays/holidays.component';
 import { SupportTicketDetailComponent } from './support-ticket-detail/support-ticket-detail.component';
 import { SupportTicketComponent } from './support-ticket/support-ticket.component';
 import { SupportTicketInfoComponent } from './support-ticket-info/support-ticket-info.component';
 import { EventsComponent } from './events/events.component';
+
 export const routes: Routes = [
     {
         path: "createAdmin/:id",
@@ -42,6 +47,11 @@ export const routes: Routes = [
         component: LeaveComponent,
         canActivate: [AuthGuardService],
     },
+      {
+        path: 'holidays',
+        component: HolidaysComponent,
+        canActivate: [AuthGuardService],
+    },
 
     {
         path: 'profile',
@@ -49,10 +59,6 @@ export const routes: Routes = [
         canActivate: [AuthGuardService],
     },
     {
-        path: 'companyTable',
-        component: CompanyTableComponent,
-        canActivate: [AuthGuardService],
-    }, {
         path: 'roleTable',
         component: RoleDetailComponent,
         canActivate: [AuthGuardService],
@@ -63,10 +69,22 @@ export const routes: Routes = [
         canActivate: [AuthGuardService],
     },
     {
+        path: 'companyTable',
+        component: CompanyTableComponent,
+        canActivate: [AuthGuardService],
+    },
+    {
         path: 'companyTable/:id',
         component: CompanyUpsertComponent,
         canActivate: [AuthGuardService],
     },
+    {
+        path: 'leaveRequest',
+        component: LeaveRequestsComponent,
+        canActivate: [AuthGuardService],
+    },
+
+    
     {
         path: 'company/:companyId',
         component: CompanyComponent,
@@ -115,6 +133,18 @@ export const routes: Routes = [
                 component: PositionUpsertComponent,
                 canActivate: [AuthGuardService],
             },
+            {
+                path: 'holidayTable',
+                component: HolidayTableComponent,
+                canActivate: [AuthGuardService],
+            },
+
+            {
+                path: 'holidayTable/:holiId',
+                component: HolidayUpsertComponent,
+                canActivate: [AuthGuardService],
+            },
+            
         ]
     },
     {

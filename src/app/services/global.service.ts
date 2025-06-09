@@ -25,6 +25,7 @@ export class GlobalService {
   imgUrl: string = "";
   drawerVisible = false;
   baseUrl = "http://localhost:5000/";
+
   Roles: any[] = [];
   Departments: Department[] = [];
   constructor(private router: Router, private http: HttpClient) { 

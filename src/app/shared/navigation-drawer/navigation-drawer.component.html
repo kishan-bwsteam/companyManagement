@@ -37,6 +37,11 @@
           <div class="nav-button"><i class="fa-solid fa-users"></i><span
               [class.displayNone]="!this.global.drawerVisible">Employees</span></div>
         </a>
+        
+        <a (click)="navigateCompanyChild('holidayTable')">
+          <div class="nav-button"><i class="fa-solid fa-sheet-plastic"></i><span
+              [class.displayNone]="!this.global.drawerVisible">Holidays</span></div>
+        </a>
       </ng-container>
 
       <ng-container *ngIf="this.global.isAdmin() && !this.router.url.includes('company/')">
@@ -48,12 +53,20 @@
           <div class="nav-button"><i class="fa-solid fa-city"></i><span
               [class.displayNone]="!this.global.drawerVisible">Company</span></div>
         </a>
+
+        <a routerLink="leaveRequest">
+          <div class="nav-button"><i class="fa-solid fa-sheet-plastic"></i><span
+              [class.displayNone]="!this.global.drawerVisible">Leave Request</span></div>
+        </a>
+        <div class="nav-button"><i class="fa-solid fa-ticket"></i><span
+
         <a routerLink="events">
           <div class="nav-button"><i class="fa-solid fa-clipboard"></i><span
               [class.displayNone]="!this.global.drawerVisible">Events</span></div>
         </a>
         <a routerLink="SupportTicketDetail">
           <div class="nav-button"><i class="fa-solid fa-ticket"></i><span
+
             [class.displayNone]="!this.global.drawerVisible">Support Ticket</span></div>
         </a>
       </ng-container>
@@ -73,6 +86,10 @@
         <a routerLink='leave'>
           <div class="nav-button"><i class="fa-solid fa-sheet-plastic"></i><span
               [class.displayNone]="!this.global.drawerVisible">Leave</span></div>
+        </a>
+        <a routerLink='holidays'>
+          <div class="nav-button"><i class="fa-solid fa-sheet-plastic"></i><span
+              [class.displayNone]="!this.global.drawerVisible">Holidays</span></div>
         </a>
         <div class="nav-button"><i class="fa-solid fa-envelope"></i><span
             [class.displayNone]="!this.global.drawerVisible">Mails</span></div>
